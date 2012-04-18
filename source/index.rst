@@ -1,6 +1,5 @@
-=======================================
-Data Catalog Schema and Access Protocol
-=======================================
+Introduction
+============
 
 The following describes a data catalog schema and access protocol.
 
@@ -72,10 +71,10 @@ Resource are a dcat:Distribution (and sub-types thereof)::
   }
 
 
-n3
---
+n3 Serialization
+----------------
 
-n3 serializations may be seen in the DCat_ vocabulary specification. To provide on example:
+The n3 serialization follows directly from DCat_ since DCat_ is an RDF vocabulary. Full details can be found in the DCat_ specification but we provide  one example here::
 
   :dataset/001
      a       dcat:Dataset ;
