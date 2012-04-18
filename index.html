@@ -1,0 +1,241 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Introduction &mdash; Data Catalog Schema and Protocol 1.0a documentation</title>
+    
+    <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/css/bootstrap.css" type="text/css" />
+    <link rel="stylesheet" href="_static/css/bootstrap-responsive.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.0a',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/bootstrap-css-tweaks.js"></script>
+    <link rel="top" title="Data Catalog Schema and Protocol 1.0a documentation" href="#" />
+
+  </head>
+  <body>
+  
+  <div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+      <div class="container">
+        
+        <a class="brand" href="#">Data Catalog Schema and Protocol</a>
+        
+        
+        <a class="okfn-logo pull-right" href="http://okfn.org/" title="An Open Knowledge Foundation Project">
+          <img src="http://assets.okfn.org/p/okfn/img/logo_28x30.png" alt="Open Knowledge Foundation logo" />
+        </a>
+        
+        
+          
+<form class="pull-right navbar-search" action="search.html" method="get">
+  <input type="text" name="q" placeholder="Search" class="search-query span2" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+        
+      </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="span9">
+      <div class="content">
+       
+  <div class="section" id="introduction">
+<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
+<p>The following describes a data catalog schema and access protocol.</p>
+</div>
+<div class="section" id="schema">
+<h1>Schema<a class="headerlink" href="#schema" title="Permalink to this headline">¶</a></h1>
+<p>The Schema is directly based on <a class="reference external" href="http://dvcs.w3.org/hg/gld/raw-file/default/dcat/index.html">DCat</a> with some minor recommendations re
+specific usage.</p>
+<p>In addition we provide a mapping of the <a class="reference external" href="http://dvcs.w3.org/hg/gld/raw-file/default/dcat/index.html">DCat</a> vocabulary (which is
+RDF-oriented) to pure JSON (and JSON-LD).</p>
+<p>The following classes from <a class="reference external" href="http://dvcs.w3.org/hg/gld/raw-file/default/dcat/index.html">DCat</a> are required:</p>
+<blockquote>
+<div><ul class="simple">
+<li>dcat:Dataset<ul>
+<li>dcat:Distribution (Resource)</li>
+</ul>
+</li>
+</ul>
+</div></blockquote>
+<p>The following are optional:</p>
+<blockquote>
+<div><ul class="simple">
+<li>dcat:Catalog</li>
+<li>dcat:CatalogRecord</li>
+</ul>
+</div></blockquote>
+<div class="section" id="json-serialization">
+<h2>JSON serialization<a class="headerlink" href="#json-serialization" title="Permalink to this headline">¶</a></h2>
+<p>A dataset would be presented as follows in JSON:</p>
+<div class="highlight-python"><pre>{
+  # required attributes
+  id: [string or integer] [dcterms:identifier] identifier of the dataset
+  title: [string] [dc:title] title for the dataset
+  license: [string] [dcterms:license] identifier for the license for this dataset
+  resources: [list] [reference] a list of resource objects (see below)
+
+  # optional attributes
+  name: [string] [] short name or slug suitable for use in a URL
+  author: [string] [dc:creator] author / creator of this dataset
+  maintainer: [string] = dcterms:publisher
+  tags: [ list-of-strings ] = dcat:keyword
+  spatial: [GeoJSON Object] = dcterms:spatial
+  temporal: [string] [dcterms:temporal] as per dcterms:temporal
+  version: [string] [] string specifying version of the data
+
+  # CatalogRecord (required)
+  metadata_modified: [iso8601 datetime] [dc:modified] when catalog was last modified
+  metadata_created: [iso8601 datetime] [dc:issued]
+
+}</pre>
+</div>
+<p>Resource are a dcat:Distribution (and sub-types thereof):</p>
+<div class="highlight-python"><pre>{
+  # required
+  resource_type: [ file | file.upload | api | doc | ... ] = defines the subclass of Distribution
+  url: [string] [dcat:downloadUrl] url download this file
+
+  # optional
+  format: [string] [dc:format] format of the file
+  size: [integer] [dcat:size] file size in bytes
+  ## additions compared to DCat
+  title: [string] [dc:title] title of this resource (e.g. file name /title )
+  mimetype: [string] [] the mimetype of the file
+  hash: [string] [] md5 hash of the file
+  last_modified: [iso8601 datetime] [dc:modified] last modified for this resource
+  name: [string] [] short name / slug suitable for use in a url
+}</pre>
+</div>
+</div>
+<div class="section" id="n3-serialization">
+<h2>n3 Serialization<a class="headerlink" href="#n3-serialization" title="Permalink to this headline">¶</a></h2>
+<p>The n3 serialization follows directly from <a class="reference external" href="http://dvcs.w3.org/hg/gld/raw-file/default/dcat/index.html">DCat</a> since <a class="reference external" href="http://dvcs.w3.org/hg/gld/raw-file/default/dcat/index.html">DCat</a> is an RDF vocabulary. Full details can be found in the <a class="reference external" href="http://dvcs.w3.org/hg/gld/raw-file/default/dcat/index.html">DCat</a> specification but we provide  one example here:</p>
+<div class="highlight-python"><pre>:dataset/001
+   a       dcat:Dataset ;
+   dct:title "Imaginary dataset" ;
+   dcat:keyword "accountability","transparency" ,"payments" ;
+   dcat:theme :themes/accountability ;
+   dct:issued "2011-12-05"^^xsd:date ;
+   dct:updated "2011-12-05"^^xsd:date ;
+   dct:publisher :agency/finance-ministry ;
+   dct:accrualPeriodicity "every six months" ;
+   dct:language "en"^^xsd:language ;
+   dcat:Distribution :dataset/001/csv ;
+   .</pre>
+</div>
+</div>
+<div class="section" id="suggestions-for-changes-in-dcat">
+<h2>Suggestions for changes in DCat<a class="headerlink" href="#suggestions-for-changes-in-dcat" title="Permalink to this headline">¶</a></h2>
+<p>Dataset:</p>
+<ul class="simple">
+<li>Remove dcat:accessURL and just use Resource (Distribution)</li>
+<li>Remove dcat:dataDictionary (leave for v2 or v1.1)</li>
+<li>Remove dcat:dataQuality (ditto)</li>
+<li>Remove dcterms:accrualPeriodicity</li>
+<li>Remove (or make optional) dcat:theme</li>
+<li>(?) Rename keyword to tag</li>
+<li>dc:updated versus dc:modified (example uses dc:updated)</li>
+</ul>
+<p>Remove:</p>
+<ul class="simple">
+<li>dc:references (is it used and how would it be used)</li>
+<li>dcat:granularity (or specify better)</li>
+</ul>
+<p>Distribution / Resources:</p>
+<ul class="simple">
+<li>Rename dcat:Distribution to dcat:Resource</li>
+<li>Extend the set of attributes a Resource may have (see below)</li>
+</ul>
+</div>
+</div>
+<div class="section" id="catalog-access-federation-and-harvesting-mechanism">
+<h1>Catalog Access, Federation and Harvesting Mechanism<a class="headerlink" href="#catalog-access-federation-and-harvesting-mechanism" title="Permalink to this headline">¶</a></h1>
+<p>Catalog Harvest Endpoint is a URL. It should be specified by a a field in the
+head of form:</p>
+<div class="highlight-python"><pre>&lt;meta name="data-catalog-api" content="{url}" /&gt;</pre>
+</div>
+<p>The endpoint MUST contain the description of the Data Catalog in that format
+and the capabilities of the endpoint.</p>
+</div>
+
+
+      </div>
+    </div>
+    <div class="span3">
+      <div class="well sidebar-nav">
+        
+          
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="#">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Introduction</a></li>
+<li><a class="reference internal" href="#schema">Schema</a><ul>
+<li><a class="reference internal" href="#json-serialization">JSON serialization</a></li>
+<li><a class="reference internal" href="#n3-serialization">n3 Serialization</a></li>
+<li><a class="reference internal" href="#suggestions-for-changes-in-dcat">Suggestions for changes in DCat</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#catalog-access-federation-and-harvesting-mechanism">Catalog Access, Federation and Harvesting Mechanism</a></li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/index.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+          
+<form class="pull-right navbar-search" action="search.html" method="get">
+  <input type="text" name="q" placeholder="Search" class="search-query span2" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+        
+        </div>
+      </div>
+        
+      </div><!--/.well -->
+    </div><!--/span-->
+  </div> <!-- / row -->
+</div>
+
+<footer>
+  <div class="inner">
+    <div class="container">
+            <p class="copyright">
+      </p>
+
+      <p class="meta">
+      </p>
+
+    </div>
+  </div>
+</footer>
+
+
+
+  </body>
+</html>
