@@ -100,6 +100,10 @@ html_theme = 'sphinx-theme-okfn'
 # documentation.
 #html_theme_options = {}
 
+html_sidebars = {
+    '**':  ['localtoc.html']
+}
+
 # Add any paths that contain custom themes here, relative to this directory.
 #html_theme_path = []
 
