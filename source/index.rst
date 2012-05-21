@@ -49,7 +49,6 @@ A dataset would be presented as follows in JSON::
     # CatalogRecord (required)
     metadata_modified: [iso8601 datetime] [dc:modified] when catalog was last modified
     metadata_created: [iso8601 datetime] [dc:issued]
-
   }
 
 Resource are a dcat:Distribution (and sub-types thereof)::
@@ -89,29 +88,76 @@ The n3 serialization follows directly from DCat_ since DCat_ is an RDF vocabular
      dcat:Distribution :dataset/001/csv ;
      .
 
-Suggestions for changes in DCat
--------------------------------
+Suggested DCat Changes
+----------------------
 
-Dataset:
+Dataset concept
+~~~~~~~~~~~~~~~
 
 * Remove dcat:accessURL and just use Resource (Distribution)
+
+  * Status: agreed and in progress
+
 * Remove dcat:dataDictionary (leave for v2 or v1.1)
+
+  * Better to introduce once practice has established a need and consistent
+    usage. One should be parsimonious in generating new properties at this
+    early stage.
+  * Also currently has Inconsistent usage
+  * Status: ticket and discuss
+
 * Remove dcat:dataQuality (ditto)
-* Remove dcterms:accrualPeriodicity
-* Remove (or make optional) dcat:theme
-* (?) Rename keyword to tag
-* dc:updated versus dc:modified (example uses dc:updated)
 
-Remove:
+  * As previous
 
-* dc:references (is it used and how would it be used)
-* dcat:granularity (or specify better)
+* Remove dcat:granularity (or specify better)
 
-Distribution / Resources:
+  * As previous
+
+* Remove dc:references (is it used and how would it be used)
+
+  * Suggest removal since for linking datasets we should have (at some point):
+    derives, links_to, sibling, partof
+  * Remember that people can always add other attributes they want ...
+  * Status: ticket and discuss
+
+* Make clear what is optional versus required (?)
+
+  * Designate as optional: dcterms:accrualPeriodicity
+  * Designate as optional: dcat:theme
+  * Resolution: ticket and discuss
+
+Possibly to add (but will not happen for the present):
+
+* version
+* partof
+
+Distribution / Resources concept
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 * Rename dcat:Distribution to dcat:Resource
-* Extend the set of attributes a Resource may have (see below)
+  
+  * Distribution has a strong connotation from software of a packaged version
+    of the entire dataset whereas, in fact, in most cases it will be a data
+    file or API associated to the Dataset for which the term Resource is more
+    appropriate.
+  * Status: ticket and discuss
 
+* Extend the set of attributes a Resource may have
+
+  * [Optional] Add dc:title to Resource
+  * [Optional] dcat:mimetype - see http://docs.ckan.org/en/latest/domain-model-resource.html
+
+    * http://docs.ckan.org/en/latest/domain-model-resource.html#resource-format-strings
+    * could also have mimetypeInner
+
+  * [Optional]: hash (md5 or sha1, must be of form md5:{hash} or sha1:{hash})
+  * [Optional]: dc:created and dc:modified
+
+* Size: define it as bytes and add sizeString. That is:
+
+  * dcat:size = number / size in bytes 
+  * [Add] dcat:sizeString: informal string description size e.g. >1Mb
 
 Catalog Access, Federation and Harvesting Mechanism
 ===================================================
