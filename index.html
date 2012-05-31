@@ -109,7 +109,6 @@ RDF-oriented) to pure JSON (and JSON-LD).</p>
   # CatalogRecord (required)
   metadata_modified: [iso8601 datetime] [dc:modified] when catalog was last modified
   metadata_created: [iso8601 datetime] [dc:issued]
-
 }</pre>
 </div>
 <p>Resource are a dcat:Distribution (and sub-types thereof):</p>
@@ -147,38 +146,132 @@ RDF-oriented) to pure JSON (and JSON-LD).</p>
    .</pre>
 </div>
 </div>
-<div class="section" id="suggestions-for-changes-in-dcat">
-<h2>Suggestions for changes in DCat<a class="headerlink" href="#suggestions-for-changes-in-dcat" title="Permalink to this headline">¶</a></h2>
-<p>Dataset:</p>
+<div class="section" id="suggested-dcat-changes">
+<h2>Suggested DCat Changes<a class="headerlink" href="#suggested-dcat-changes" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="dataset-concept">
+<h3>Dataset concept<a class="headerlink" href="#dataset-concept" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li>Remove dcat:accessURL and just use Resource (Distribution)</li>
-<li>Remove dcat:dataDictionary (leave for v2 or v1.1)</li>
-<li>Remove dcat:dataQuality (ditto)</li>
-<li>Remove dcterms:accrualPeriodicity</li>
-<li>Remove (or make optional) dcat:theme</li>
-<li>(?) Rename keyword to tag</li>
-<li>dc:updated versus dc:modified (example uses dc:updated)</li>
+<li>Remove dcat:accessURL and just use Resource (Distribution)<ul>
+<li>Status: agreed and in progress</li>
 </ul>
-<p>Remove:</p>
+</li>
+<li>Remove dcat:dataDictionary (leave for v2 or v1.1)<ul>
+<li>Better to introduce once practice has established a need and consistent
+usage. One should be parsimonious in generating new properties at this
+early stage.</li>
+<li>Also currently has Inconsistent usage</li>
+<li>Status: ticket and discuss</li>
+</ul>
+</li>
+<li>Remove dcat:dataQuality (ditto)<ul>
+<li>As previous</li>
+</ul>
+</li>
+<li>Remove dcat:granularity (or specify better)<ul>
+<li>As previous</li>
+</ul>
+</li>
+<li>Remove dc:references (is it used and how would it be used)<ul>
+<li>Suggest removal since for linking datasets we should have (at some point):
+derives, links_to, sibling, partof</li>
+<li>Remember that people can always add other attributes they want ...</li>
+<li>Status: ticket and discuss</li>
+</ul>
+</li>
+<li>Make clear what is optional versus required (?)<ul>
+<li>Designate as optional: dcterms:accrualPeriodicity</li>
+<li>Designate as optional: dcat:theme</li>
+<li>Resolution: ticket and discuss</li>
+</ul>
+</li>
+</ul>
+<p>Possibly to add (but will not happen for the present):</p>
 <ul class="simple">
-<li>dc:references (is it used and how would it be used)</li>
-<li>dcat:granularity (or specify better)</li>
+<li>version</li>
+<li>partof</li>
 </ul>
-<p>Distribution / Resources:</p>
+</div>
+<div class="section" id="distribution-resources-concept">
+<h3>Distribution / Resources concept<a class="headerlink" href="#distribution-resources-concept" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li>Rename dcat:Distribution to dcat:Resource</li>
-<li>Extend the set of attributes a Resource may have (see below)</li>
+<li>Rename dcat:Distribution to dcat:Resource<ul>
+<li>Distribution has a strong connotation from software of a packaged version
+of the entire dataset whereas, in fact, in most cases it will be a data
+file or API associated to the Dataset for which the term Resource is more
+appropriate.</li>
+<li>Status: ticket and discuss</li>
 </ul>
+</li>
+<li>Extend the set of attributes a Resource may have<ul>
+<li>[Optional] Add dc:title to Resource</li>
+<li>[Optional] dcat:mimetype - see http://docs.ckan.org/en/latest/domain-model-resource.html<ul>
+<li><a class="reference external" href="http://docs.ckan.org/en/latest/domain-model-resource.html#resource-format-strings">http://docs.ckan.org/en/latest/domain-model-resource.html#resource-format-strings</a></li>
+<li>could also have mimetypeInner</li>
+</ul>
+</li>
+<li>[Optional]: hash (md5 or sha1, must be of form md5:{hash} or sha1:{hash})</li>
+<li>[Optional]: dc:created and dc:modified</li>
+</ul>
+</li>
+<li>Size: define it as bytes and add sizeString. That is:<ul>
+<li>dcat:size = number / size in bytes</li>
+<li>[Add] dcat:sizeString: informal string description size e.g. &gt;1Mb</li>
+</ul>
+</li>
+</ul>
+</div>
 </div>
 </div>
 <div class="section" id="catalog-access-federation-and-harvesting-mechanism">
 <h1>Catalog Access, Federation and Harvesting Mechanism<a class="headerlink" href="#catalog-access-federation-and-harvesting-mechanism" title="Permalink to this headline">¶</a></h1>
-<p>Catalog Harvest Endpoint is a URL. It should be specified by a a field in the
-head of form:</p>
-<div class="highlight-python"><pre>&lt;meta name="data-catalog-api" content="{url}" /&gt;</pre>
+<p><strong>Status: early draft</strong></p>
+<p>This portion of the specification details a protocol for accessing catalog
+metadata and supporting automated harvesting and federation.</p>
+<p><em>This specification is at a very early stage and is intended as a basis for discussion rather than a finished document</em>.</p>
+<div class="section" id="api">
+<h2>API<a class="headerlink" href="#api" title="Permalink to this headline">¶</a></h2>
+<p>A catalog MUST provide the following API. The API base location is specified by the following meta tag in the site home page:</p>
+<div class="highlight-python"><pre>&lt;meta content="data-catalog-api" value="http://my-data-catalog.org/api" /&gt;</pre>
 </div>
-<p>The endpoint MUST contain the description of the Data Catalog in that format
-and the capabilities of the endpoint.</p>
+<p>Relative to this base URL there are the following endpoints:</p>
+<div class="highlight-python"><pre>/changes.json # changes API
+/dataset/{id}.json # dataset API</pre>
+</div>
+<div class="section" id="changes-api">
+<h3>Changes API<a class="headerlink" href="#changes-api" title="Permalink to this headline">¶</a></h3>
+<p>Get all changes since X:</p>
+<div class="highlight-python"><pre>/api/changes.json?since=date&amp;page=3</pre>
+</div>
+<p>Two optional parameters:</p>
+<blockquote>
+<div><ul class="simple">
+<li>since: date to specify when to retrieve changes since</li>
+<li>page: page option</li>
+</ul>
+</div></blockquote>
+<p>Just return a 400 Bad Request with a message saying something sensible like &#8220;the turtle API is not available. Use the JSON API here: <a class="reference external" href="http://xxx">http://xxx</a>&#8220;</p>
+<p>Returns a list of objects like:</p>
+<div class="highlight-python"><pre>{
+    dataset_id:
+    modified_date: 2012-12-12T12.12.342342
+    change_type: update | deleted | created | ...
+}</pre>
+</div>
+<p>Format of returned results is determined by extension. An implementor MUST implement JSON and MAY implement others such as turtle, n3 etc.</p>
+<p>Attempts to access a format that is not supported MUST return 400 Bad Request</p>
+</div>
+<div class="section" id="dataset-api">
+<h3>Dataset API<a class="headerlink" href="#dataset-api" title="Permalink to this headline">¶</a></h3>
+<p>This returns object corresponding to the Schema specified above.</p>
+</div>
+</div>
+<div class="section" id="to-discuss">
+<h2>To Discuss<a class="headerlink" href="#to-discuss" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Rate limiting based on the values in a ROBOTS.txt</li>
+<li>Notification (pus) APIs</li>
+</ul>
+</div>
 </div>
 
 
@@ -196,24 +289,24 @@ and the capabilities of the endpoint.</p>
 <li><a class="reference internal" href="#schema">Schema</a><ul>
 <li><a class="reference internal" href="#json-serialization">JSON serialization</a></li>
 <li><a class="reference internal" href="#n3-serialization">n3 Serialization</a></li>
-<li><a class="reference internal" href="#suggestions-for-changes-in-dcat">Suggestions for changes in DCat</a></li>
+<li><a class="reference internal" href="#suggested-dcat-changes">Suggested DCat Changes</a><ul>
+<li><a class="reference internal" href="#dataset-concept">Dataset concept</a></li>
+<li><a class="reference internal" href="#distribution-resources-concept">Distribution / Resources concept</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#catalog-access-federation-and-harvesting-mechanism">Catalog Access, Federation and Harvesting Mechanism</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#catalog-access-federation-and-harvesting-mechanism">Catalog Access, Federation and Harvesting Mechanism</a><ul>
+<li><a class="reference internal" href="#api">API</a><ul>
+<li><a class="reference internal" href="#changes-api">Changes API</a></li>
+<li><a class="reference internal" href="#dataset-api">Dataset API</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#to-discuss">To Discuss</a></li>
+</ul>
+</li>
 </ul>
 
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="_sources/index.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-          
-<form class="pull-right navbar-search" action="search.html" method="get">
-  <input type="text" name="q" placeholder="Search" class="search-query span2" />
-  <input type="hidden" name="check_keywords" value="yes" />
-  <input type="hidden" name="area" value="default" />
-</form>
-        
         </div>
       </div>
         
