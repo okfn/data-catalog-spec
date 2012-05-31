@@ -95,6 +95,11 @@ sys.path.append(os.path.abspath('_themes'))
 html_theme_path = ['_themes']
 html_theme = 'sphinx-theme-okfn'
 
+# Custom sidebar templates, maps document names to template names.
+html_sidebars = {
+    '**':  ['localtoc.html']
+}
+
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
 # documentation.
