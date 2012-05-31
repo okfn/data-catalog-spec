@@ -116,11 +116,59 @@ Distribution / Resources:
 Catalog Access, Federation and Harvesting Mechanism
 ===================================================
 
-Catalog Harvest Endpoint is a URL. It should be specified by a a field in the
-head of form::
+**Status: early draft**
 
-  <meta name="data-catalog-api" content="{url}" />
+This portion of the specification details a protocol for accessing catalog
+metadata and supporting automated harvesting and federation.
 
-The endpoint MUST contain the description of the Data Catalog in that format
-and the capabilities of the endpoint.
+*This specification is at a very early stage and is intended as a basis for discussion rather than a finished document*.
+
+API
+---
+
+A catalog MUST provide the following API. The API base location is specified by the following meta tag in the site home page::
+
+  <meta content="data-catalog-api" value="http://my-data-catalog.org/api" />
+
+Relative to this base URL there are the following endpoints::
+
+  /changes.json # changes API
+  /dataset/{id}.json # dataset API
+
+Changes API
+~~~~~~~~~~~
+
+Get all changes since X::
+
+  /api/changes.json?since=date&page=3
+
+Two optional parameters:
+
+  * since: date to specify when to retrieve changes since
+  * page: page option
+
+Just return a 400 Bad Request with a message saying something sensible like "the turtle API is not available. Use the JSON API here: http://xxx"
+
+Returns a list of objects like::
+
+  {
+      dataset_id:
+      modified_date: 2012-12-12T12.12.342342
+      change_type: update | deleted | created | ...
+  }
+
+Format of returned results is determined by extension. An implementor MUST implement JSON and MAY implement others such as turtle, n3 etc.
+
+Attempts to access a format that is not supported MUST return 400 Bad Request
+
+Dataset API
+~~~~~~~~~~~
+
+This returns object corresponding to the Schema specified above.
+
+To Discuss
+----------
+
+* Rate limiting based on the values in a ROBOTS.txt
+* Notification (pus) APIs
 
