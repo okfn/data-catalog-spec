@@ -67,11 +67,11 @@
 </div>
 <div class="section" id="schema">
 <h1>Schema<a class="headerlink" href="#schema" title="Permalink to this headline">¶</a></h1>
-<p>The Schema is directly based on <a class="reference external" href="http://dvcs.w3.org/hg/gld/raw-file/default/dcat/index.html">DCat</a> with some minor recommendations re
+<p>The Schema is directly based on <a class="reference external" href="http://dvcs.w3.org/hg/gld/raw-file/default/dcat/index.html">DCAT</a> with some minor recommendations re
 specific usage.</p>
-<p>In addition we provide a mapping of the <a class="reference external" href="http://dvcs.w3.org/hg/gld/raw-file/default/dcat/index.html">DCat</a> vocabulary (which is
+<p>In addition we provide a mapping of the <a class="reference external" href="http://dvcs.w3.org/hg/gld/raw-file/default/dcat/index.html">DCAT</a> vocabulary (which is
 RDF-oriented) to pure JSON (and JSON-LD).</p>
-<p>The following classes from <a class="reference external" href="http://dvcs.w3.org/hg/gld/raw-file/default/dcat/index.html">DCat</a> are required:</p>
+<p>The following classes from <a class="reference external" href="http://dvcs.w3.org/hg/gld/raw-file/default/dcat/index.html">DCAT</a> are required:</p>
 <blockquote>
 <div><ul class="simple">
 <li>dcat:Dataset<ul>
@@ -120,7 +120,7 @@ RDF-oriented) to pure JSON (and JSON-LD).</p>
   # optional
   format: [string] [dc:format] format of the file
   size: [integer] [dcat:size] file size in bytes
-  ## additions compared to DCat
+  ## additions compared to DCAT
   title: [string] [dc:title] title of this resource (e.g. file name /title )
   mimetype: [string] [] the mimetype of the file
   hash: [string] [] md5 hash of the file
@@ -131,7 +131,7 @@ RDF-oriented) to pure JSON (and JSON-LD).</p>
 </div>
 <div class="section" id="n3-serialization">
 <h2>n3 Serialization<a class="headerlink" href="#n3-serialization" title="Permalink to this headline">¶</a></h2>
-<p>The n3 serialization follows directly from <a class="reference external" href="http://dvcs.w3.org/hg/gld/raw-file/default/dcat/index.html">DCat</a> since <a class="reference external" href="http://dvcs.w3.org/hg/gld/raw-file/default/dcat/index.html">DCat</a> is an RDF vocabulary. Full details can be found in the <a class="reference external" href="http://dvcs.w3.org/hg/gld/raw-file/default/dcat/index.html">DCat</a> specification but we provide  one example here:</p>
+<p>The n3 serialization follows directly from <a class="reference external" href="http://dvcs.w3.org/hg/gld/raw-file/default/dcat/index.html">DCAT</a> since <a class="reference external" href="http://dvcs.w3.org/hg/gld/raw-file/default/dcat/index.html">DCAT</a> is an RDF vocabulary. Full details can be found in the <a class="reference external" href="http://dvcs.w3.org/hg/gld/raw-file/default/dcat/index.html">DCAT</a> specification but we provide  one example here:</p>
 <div class="highlight-python"><pre>:dataset/001
    a       dcat:Dataset ;
    dct:title "Imaginary dataset" ;
@@ -147,7 +147,7 @@ RDF-oriented) to pure JSON (and JSON-LD).</p>
 </div>
 </div>
 <div class="section" id="suggested-dcat-changes">
-<h2>Suggested DCat Changes<a class="headerlink" href="#suggested-dcat-changes" title="Permalink to this headline">¶</a></h2>
+<h2>Suggested DCAT Changes<a class="headerlink" href="#suggested-dcat-changes" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="dataset-concept">
 <h3>Dataset concept<a class="headerlink" href="#dataset-concept" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
@@ -289,7 +289,7 @@ metadata and supporting automated harvesting and federation.</p>
 <li><a class="reference internal" href="#schema">Schema</a><ul>
 <li><a class="reference internal" href="#json-serialization">JSON serialization</a></li>
 <li><a class="reference internal" href="#n3-serialization">n3 Serialization</a></li>
-<li><a class="reference internal" href="#suggested-dcat-changes">Suggested DCat Changes</a><ul>
+<li><a class="reference internal" href="#suggested-dcat-changes">Suggested DCAT Changes</a><ul>
 <li><a class="reference internal" href="#dataset-concept">Dataset concept</a></li>
 <li><a class="reference internal" href="#distribution-resources-concept">Distribution / Resources concept</a></li>
 </ul>
