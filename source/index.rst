@@ -6,15 +6,15 @@ The following describes a data catalog schema and access protocol.
 Schema
 ======
 
-The Schema is directly based on DCat_ with some minor recommendations re
+The Schema is directly based on DCAT_ with some minor recommendations re
 specific usage.
 
-In addition we provide a mapping of the DCat_ vocabulary (which is
+In addition we provide a mapping of the DCAT_ vocabulary (which is
 RDF-oriented) to pure JSON (and JSON-LD).
 
-.. _DCat: http://dvcs.w3.org/hg/gld/raw-file/default/dcat/index.html
+.. _DCAT: http://dvcs.w3.org/hg/gld/raw-file/default/dcat/index.html
 
-The following classes from DCat_ are required:
+The following classes from DCAT_ are required:
 
   * dcat:Dataset
     
@@ -61,7 +61,7 @@ Resource are a dcat:Distribution (and sub-types thereof)::
     # optional
     format: [string] [dc:format] format of the file
     size: [integer] [dcat:size] file size in bytes
-    ## additions compared to DCat
+    ## additions compared to DCAT
     title: [string] [dc:title] title of this resource (e.g. file name /title )
     mimetype: [string] [] the mimetype of the file
     hash: [string] [] md5 hash of the file
@@ -73,7 +73,7 @@ Resource are a dcat:Distribution (and sub-types thereof)::
 n3 Serialization
 ----------------
 
-The n3 serialization follows directly from DCat_ since DCat_ is an RDF vocabulary. Full details can be found in the DCat_ specification but we provide  one example here::
+The n3 serialization follows directly from DCAT_ since DCAT_ is an RDF vocabulary. Full details can be found in the DCAT_ specification but we provide  one example here::
 
   :dataset/001
      a       dcat:Dataset ;
@@ -88,7 +88,7 @@ The n3 serialization follows directly from DCat_ since DCat_ is an RDF vocabular
      dcat:Distribution :dataset/001/csv ;
      .
 
-Suggested DCat Changes
+Suggested DCAT Changes
 ----------------------
 
 Dataset concept
