@@ -193,7 +193,7 @@ Two optional parameters:
   * since: date to specify when to retrieve changes since
   * page: page option
 
-Just return a 400 Bad Request with a message saying something sensible like "the turtle API is not available. Use the JSON API here: http://xxx"
+Dates in the API are assumed to be formatted in according to ISO 8601 (e.g. 2012-12-12T12.12.342342). 
 
 Returns a list of objects like::
 
@@ -205,16 +205,22 @@ Returns a list of objects like::
 
 Format of returned results is determined by extension. An implementor MUST implement JSON and MAY implement others such as turtle, n3 etc.
 
-Attempts to access a format that is not supported MUST return 400 Bad Request
+When the request is invalid or the requested range not available, return a 400 Bad Request with a message saying something sensible like "the turtle API is not available. Use the JSON API here: http://xxx"
+
+Attempts to access a format that is not supported MUST return 400 Bad Request.
 
 Dataset API
 ~~~~~~~~~~~
 
-This returns object corresponding to the Schema specified above.
+This returns object corresponding to the Schema specified above. The desired representation can be specified both via the file extension on the URI as well as via an Accept header. Supported types are:
+
+  * .json - application/json 
+  * .n3 - text/n3
+  * .rdf - application/rdf+xml
 
 To Discuss
 ----------
 
 * Rate limiting based on the values in a ROBOTS.txt
-* Notification (pus) APIs
+* Notification (push) APIs
 
