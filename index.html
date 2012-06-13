@@ -7,7 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Introduction &mdash; Data Catalog Schema and Protocol 1.0a documentation</title>
+    <title>Introduction &mdash; Data Catalog Schema and Protocol 0.1 documentation</title>
     
     <link rel="stylesheet" href="_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -18,7 +18,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '1.0a',
+        VERSION:     '0.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="_static/bootstrap-css-tweaks.js"></script>
-    <link rel="top" title="Data Catalog Schema and Protocol 1.0a documentation" href="#" />
+    <link rel="top" title="Data Catalog Schema and Protocol 0.1 documentation" href="#" />
 
   </head>
   <body>
@@ -37,12 +37,8 @@
     <div class="navbar-inner">
       <div class="container">
         
-        <a class="brand" href="#">Data Catalog Schema and Protocol</a>
+        <a class="brand" href="#">Data Catalog Schema and Protocol<span class="version"> v0.1</span></a>
         
-        
-        <a class="okfn-logo pull-right" href="http://okfn.org/" title="An Open Knowledge Foundation Project">
-          <img src="http://assets.okfn.org/p/okfn/img/logo_28x30.png" alt="Open Knowledge Foundation logo" />
-        </a>
         
         
           
@@ -109,6 +105,7 @@ RDF-oriented) to pure JSON (and JSON-LD).</p>
   # CatalogRecord (required)
   metadata_modified: [iso8601 datetime] [dc:modified] when catalog was last modified
   metadata_created: [iso8601 datetime] [dc:issued]
+
 }</pre>
 </div>
 <p>Resource are a dcat:Distribution (and sub-types thereof):</p>
@@ -146,80 +143,28 @@ RDF-oriented) to pure JSON (and JSON-LD).</p>
    .</pre>
 </div>
 </div>
-<div class="section" id="suggested-dcat-changes">
-<h2>Suggested DCAT Changes<a class="headerlink" href="#suggested-dcat-changes" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="dataset-concept">
-<h3>Dataset concept<a class="headerlink" href="#dataset-concept" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="suggestions-for-changes-in-dcat">
+<h2>Suggestions for changes in DCAT<a class="headerlink" href="#suggestions-for-changes-in-dcat" title="Permalink to this headline">¶</a></h2>
+<p>Dataset:</p>
 <ul class="simple">
-<li>Remove dcat:accessURL and just use Resource (Distribution)<ul>
-<li>Status: agreed and in progress</li>
+<li>Remove dcat:accessURL and just use Resource (Distribution)</li>
+<li>Remove dcat:dataDictionary (leave for v2 or v1.1)</li>
+<li>Remove dcat:dataQuality (ditto)</li>
+<li>Remove dcterms:accrualPeriodicity</li>
+<li>Remove (or make optional) dcat:theme</li>
+<li>(?) Rename keyword to tag</li>
+<li>dc:updated versus dc:modified (example uses dc:updated)</li>
 </ul>
-</li>
-<li>Remove dcat:dataDictionary (leave for v2 or v1.1)<ul>
-<li>Better to introduce once practice has established a need and consistent
-usage. One should be parsimonious in generating new properties at this
-early stage.</li>
-<li>Also currently has Inconsistent usage</li>
-<li>Status: ticket and discuss</li>
-</ul>
-</li>
-<li>Remove dcat:dataQuality (ditto)<ul>
-<li>As previous</li>
-</ul>
-</li>
-<li>Remove dcat:granularity (or specify better)<ul>
-<li>As previous</li>
-</ul>
-</li>
-<li>Remove dc:references (is it used and how would it be used)<ul>
-<li>Suggest removal since for linking datasets we should have (at some point):
-derives, links_to, sibling, partof</li>
-<li>Remember that people can always add other attributes they want ...</li>
-<li>Status: ticket and discuss</li>
-</ul>
-</li>
-<li>Make clear what is optional versus required (?)<ul>
-<li>Designate as optional: dcterms:accrualPeriodicity</li>
-<li>Designate as optional: dcat:theme</li>
-<li>Resolution: ticket and discuss</li>
-</ul>
-</li>
-</ul>
-<p>Possibly to add (but will not happen for the present):</p>
+<p>Remove:</p>
 <ul class="simple">
-<li>version</li>
-<li>partof</li>
+<li>dc:references (is it used and how would it be used)</li>
+<li>dcat:granularity (or specify better)</li>
 </ul>
-</div>
-<div class="section" id="distribution-resources-concept">
-<h3>Distribution / Resources concept<a class="headerlink" href="#distribution-resources-concept" title="Permalink to this headline">¶</a></h3>
+<p>Distribution / Resources:</p>
 <ul class="simple">
-<li>Rename dcat:Distribution to dcat:Resource<ul>
-<li>Distribution has a strong connotation from software of a packaged version
-of the entire dataset whereas, in fact, in most cases it will be a data
-file or API associated to the Dataset for which the term Resource is more
-appropriate.</li>
-<li>Status: ticket and discuss</li>
+<li>Rename dcat:Distribution to dcat:Resource</li>
+<li>Extend the set of attributes a Resource may have (see below)</li>
 </ul>
-</li>
-<li>Extend the set of attributes a Resource may have<ul>
-<li>[Optional] Add dc:title to Resource</li>
-<li>[Optional] dcat:mimetype - see http://docs.ckan.org/en/latest/domain-model-resource.html<ul>
-<li><a class="reference external" href="http://docs.ckan.org/en/latest/domain-model-resource.html#resource-format-strings">http://docs.ckan.org/en/latest/domain-model-resource.html#resource-format-strings</a></li>
-<li>could also have mimetypeInner</li>
-</ul>
-</li>
-<li>[Optional]: hash (md5 or sha1, must be of form md5:{hash} or sha1:{hash})</li>
-<li>[Optional]: dc:created and dc:modified</li>
-</ul>
-</li>
-<li>Size: define it as bytes and add sizeString. That is:<ul>
-<li>dcat:size = number / size in bytes</li>
-<li>[Add] dcat:sizeString: informal string description size e.g. &gt;1Mb</li>
-</ul>
-</li>
-</ul>
-</div>
 </div>
 </div>
 <div class="section" id="catalog-access-federation-and-harvesting-mechanism">
@@ -289,11 +234,7 @@ metadata and supporting automated harvesting and federation.</p>
 <li><a class="reference internal" href="#schema">Schema</a><ul>
 <li><a class="reference internal" href="#json-serialization">JSON serialization</a></li>
 <li><a class="reference internal" href="#n3-serialization">n3 Serialization</a></li>
-<li><a class="reference internal" href="#suggested-dcat-changes">Suggested DCAT Changes</a><ul>
-<li><a class="reference internal" href="#dataset-concept">Dataset concept</a></li>
-<li><a class="reference internal" href="#distribution-resources-concept">Distribution / Resources concept</a></li>
-</ul>
-</li>
+<li><a class="reference internal" href="#suggestions-for-changes-in-dcat">Suggestions for changes in DCAT</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#catalog-access-federation-and-harvesting-mechanism">Catalog Access, Federation and Harvesting Mechanism</a><ul>
@@ -306,6 +247,23 @@ metadata and supporting automated harvesting and federation.</p>
 </ul>
 </li>
 </ul>
+<div>
+  <h3>Contribute</h3>
+  <p>Contributions, comments and corrections are warmly welcomed. They can
+  be submitted via one of the following routes:</p>
+  <ol>
+    <li>A patch to the <a
+    href="https://github.com/okfn/data-catalog-spec">git repo</a> (fork and pull
+  recommended) &ndash; best for textual corrections and additions</li>
+  <li>The <a
+    href="http://lists.okfn.org/mailman/listinfo/data-catalogs">mailing
+    list</a> &ndash; best for general discussion</li>
+    <li>The <a href="https://github.com/okfn/data-catalog-spec/issues">issue
+      tracker</a> &ndash; best for general issues or suggestions</li>
+    <li><a href="https://twitter.com/CKANProject">@CKANProject Twitter
+    account</a></li>
+  </ol>
+</div>
 
         </div>
       </div>
@@ -329,6 +287,18 @@ metadata and supporting automated harvesting and federation.</p>
 </footer>
 
 
+
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-8271754-41']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
 
   </body>
 </html>
