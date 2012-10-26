@@ -387,6 +387,9 @@ dt, dd {
 dt {
   font-weight: bold;
 }
+dt:target {
+    padding-top: 60px;
+    }
 dd {
   margin-left: 9px;
 }

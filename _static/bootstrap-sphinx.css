@@ -129,8 +129,14 @@ div.sphinxsidebar, div.sphinxsidebar p {
           box-shadow: 0 1px 2px rgba(0,0,0,.15);
 }
 
-div.section {
+/* fix for fixed topbar which can obscure section headings */
+div.section h1, div.section h2, div.section h3, div.section h4, div.section h5 {
   padding-top: 50px;
+}
+
+/* do not do this for first item on the page ...*/
+.content div.section:first-child h1 {
+  padding-top: 0px;
 }
 
 footer {
@@ -212,4 +218,12 @@ footer a, footer a:hover {
   color: #AEEBDF;
 }
 
+/**************** Auto docs **********************/
+dl.function {
+  margin-top: 80px;
+}
+
+dl.function th {
+  vertical-align: top;
+}
 
