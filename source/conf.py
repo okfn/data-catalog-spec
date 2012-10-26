@@ -111,7 +111,7 @@ html_sidebars = {
 #html_theme_options = {}
 
 html_sidebars = {
-    '**':  ['localtoc.html']
+    '**':  ['localtoc.html', 'contribute.html']
 }
 
 # Add any paths that contain custom themes here, relative to this directory.
