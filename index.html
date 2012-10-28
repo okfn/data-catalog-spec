@@ -59,30 +59,20 @@
        
   <div class="section" id="introduction">
 <h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
-<p>The following describes a data catalog schema and access protocol.</p>
+<p>The following describes a data catalog schema and access protocol. The schema
+describes how metadata from the catalog should be presented (and, if
+neceessary, consumed) while the protocol provides a specification of how to
+interact with a data catalog in order to extract relevant information from it
+such as metadata on the datasets it contains.</p>
 </div>
 <div class="section" id="schema">
 <h1>Schema<a class="headerlink" href="#schema" title="Permalink to this headline">¶</a></h1>
-<p>The Schema is directly based on <a class="reference external" href="http://dvcs.w3.org/hg/gld/raw-file/default/dcat/index.html">DCAT</a> with some minor recommendations re
-specific usage.</p>
-<p>In addition we provide a mapping of the <a class="reference external" href="http://dvcs.w3.org/hg/gld/raw-file/default/dcat/index.html">DCAT</a> vocabulary (which is
-RDF-oriented) to pure JSON (and JSON-LD).</p>
-<p>The following classes from <a class="reference external" href="http://dvcs.w3.org/hg/gld/raw-file/default/dcat/index.html">DCAT</a> are required:</p>
-<blockquote>
-<div><ul class="simple">
-<li>dcat:Dataset<ul>
-<li>dcat:Distribution (Resource)</li>
-</ul>
-</li>
-</ul>
-</div></blockquote>
-<p>The following are optional:</p>
-<blockquote>
-<div><ul class="simple">
-<li>dcat:Catalog</li>
-<li>dcat:CatalogRecord</li>
-</ul>
-</div></blockquote>
+<p>The Schema is directly based on <a class="reference external" href="http://www.w3.org/TR/vocab-dcat/">DCAT</a> with some minor recommendations re
+specific usage. In addition we provide a mapping of the <a class="reference external" href="http://www.w3.org/TR/vocab-dcat/">DCAT</a> vocabulary (which
+is RDF-oriented) to pure JSON (and JSON-LD).</p>
+<p>The following classes from <a class="reference external" href="http://www.w3.org/TR/vocab-dcat/">DCAT</a> are used: dcat:Dataset and dcat:Distribution
+(Resource). The following are optional and are not used by default in the
+outline below: dcat:Catalog and dcat:CatalogRecord.</p>
 <div class="section" id="json-serialization">
 <h2>JSON serialization<a class="headerlink" href="#json-serialization" title="Permalink to this headline">¶</a></h2>
 <p>A dataset would be presented as follows in JSON:</p>
@@ -127,7 +117,7 @@ RDF-oriented) to pure JSON (and JSON-LD).</p>
 </div>
 <div class="section" id="n3-serialization">
 <h2>n3 Serialization<a class="headerlink" href="#n3-serialization" title="Permalink to this headline">¶</a></h2>
-<p>The n3 serialization follows directly from <a class="reference external" href="http://dvcs.w3.org/hg/gld/raw-file/default/dcat/index.html">DCAT</a> since <a class="reference external" href="http://dvcs.w3.org/hg/gld/raw-file/default/dcat/index.html">DCAT</a> is an RDF vocabulary. Full details can be found in the <a class="reference external" href="http://dvcs.w3.org/hg/gld/raw-file/default/dcat/index.html">DCAT</a> specification but we provide  one example here:</p>
+<p>The n3 serialization follows directly from <a class="reference external" href="http://www.w3.org/TR/vocab-dcat/">DCAT</a> since <a class="reference external" href="http://www.w3.org/TR/vocab-dcat/">DCAT</a> is an RDF vocabulary. Full details can be found in the <a class="reference external" href="http://www.w3.org/TR/vocab-dcat/">DCAT</a> specification but we provide  one example here:</p>
 <div class="highlight-python"><pre>:dataset/001
    a       dcat:Dataset ;
    dct:title "Imaginary dataset" ;
@@ -142,21 +132,28 @@ RDF-oriented) to pure JSON (and JSON-LD).</p>
    .</pre>
 </div>
 </div>
-<div class="section" id="suggested-dcat-changes">
-<h2>Suggested DCAT Changes<a class="headerlink" href="#suggested-dcat-changes" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="proposals-for-changes-to-dcat">
+<h2>Proposals for changes to DCAT<a class="headerlink" href="#proposals-for-changes-to-dcat" title="Permalink to this headline">¶</a></h2>
+<p>Various changes to DCAT have been suggested to as a result of in practice
+usage. The following summarize the proposed changes.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The following are under discussion with the W3C Government
+Linked Data working group who are managing the DCAT specification. A
+detailed discussion took place at the <a class="reference external" href="http://www.w3.org/2011/gld/meeting/2012-07-26">GLD WG meeting on 26th July</a>
+and consensus resolution has been reached on almost all of them at
+the recent GLD meeting in October - see <a class="reference external" href="http://www.w3.org/2011/gld/meeting/2012-10-25">minutes and resolutions of
+the meeting on 25th October 2012</a>.</p>
+</div>
 <div class="section" id="dataset-concept">
 <h3>Dataset concept<a class="headerlink" href="#dataset-concept" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li>Remove dcat:accessURL and just use Resource (Distribution)<ul>
-<li>Status: agreed and in progress</li>
-</ul>
-</li>
+<li>Remove dcat:accessURL and just use Resource (Distribution)</li>
 <li>Remove dcat:dataDictionary (leave for v2 or v1.1)<ul>
 <li>Better to introduce once practice has established a need and consistent
 usage. One should be parsimonious in generating new properties at this
 early stage.</li>
-<li>Also currently has Inconsistent usage</li>
-<li>Status: ticket and discuss</li>
+<li>Also currently has inconsistent usage</li>
 </ul>
 </li>
 <li>Remove dcat:dataQuality (ditto)<ul>
@@ -171,13 +168,12 @@ early stage.</li>
 <li>Suggest removal since for linking datasets we should have (at some point):
 derives, links_to, sibling, partof</li>
 <li>Remember that people can always add other attributes they want ...</li>
-<li>Status: ticket and discuss</li>
 </ul>
 </li>
-<li>Make clear what is optional versus required (?)<ul>
+<li>(Correction) dc:updated versus dc:modified (example uses dc:updated)</li>
+<li>Make clear what is optional versus required (?) e.g.<ul>
 <li>Designate as optional: dcterms:accrualPeriodicity</li>
 <li>Designate as optional: dcat:theme</li>
-<li>Resolution: ticket and discuss</li>
 </ul>
 </li>
 </ul>
@@ -195,7 +191,11 @@ derives, links_to, sibling, partof</li>
 of the entire dataset whereas, in fact, in most cases it will be a data
 file or API associated to the Dataset for which the term Resource is more
 appropriate.</li>
-<li>Status: ticket and discuss</li>
+</ul>
+</li>
+<li>Size: define it as bytes and add sizeString. That is:<ul>
+<li>dcat:size = number / size in bytes</li>
+<li>[Add] dcat:sizeString: informal string description size e.g. &gt; 1Mb</li>
 </ul>
 </li>
 <li>Extend the set of attributes a Resource may have<ul>
@@ -207,11 +207,6 @@ appropriate.</li>
 </li>
 <li>[Optional]: hash (md5 or sha1, must be of form md5:{hash} or sha1:{hash})</li>
 <li>[Optional]: dc:created and dc:modified</li>
-</ul>
-</li>
-<li>Size: define it as bytes and add sizeString. That is:<ul>
-<li>dcat:size = number / size in bytes</li>
-<li>[Add] dcat:sizeString: informal string description size e.g. &gt;1Mb</li>
 </ul>
 </li>
 </ul>
@@ -293,7 +288,7 @@ metadata and supporting automated harvesting and federation.</p>
 <li><a class="reference internal" href="#schema">Schema</a><ul>
 <li><a class="reference internal" href="#json-serialization">JSON serialization</a></li>
 <li><a class="reference internal" href="#n3-serialization">n3 Serialization</a></li>
-<li><a class="reference internal" href="#suggested-dcat-changes">Suggested DCAT Changes</a><ul>
+<li><a class="reference internal" href="#proposals-for-changes-to-dcat">Proposals for changes to DCAT</a><ul>
 <li><a class="reference internal" href="#dataset-concept">Dataset concept</a></li>
 <li><a class="reference internal" href="#distribution-resources-concept">Distribution / Resources concept</a></li>
 </ul>
