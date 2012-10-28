@@ -1,29 +1,24 @@
 Introduction
 ============
 
-The following describes a data catalog schema and access protocol.
+The following describes a data catalog schema and access protocol. The schema
+describes how metadata from the catalog should be presented (and, if
+neceessary, consumed) while the protocol provides a specification of how to
+interact with a data catalog in order to extract relevant information from it
+such as metadata on the datasets it contains.
 
 Schema
 ======
 
 The Schema is directly based on DCAT_ with some minor recommendations re
-specific usage.
+specific usage. In addition we provide a mapping of the DCAT_ vocabulary (which
+is RDF-oriented) to pure JSON (and JSON-LD).
 
-In addition we provide a mapping of the DCAT_ vocabulary (which is
-RDF-oriented) to pure JSON (and JSON-LD).
+.. _DCAT: http://www.w3.org/TR/vocab-dcat/
 
-.. _DCAT: http://dvcs.w3.org/hg/gld/raw-file/default/dcat/index.html
-
-The following classes from DCAT_ are required:
-
-  * dcat:Dataset
-    
-    * dcat:Distribution (Resource)
-
-The following are optional:
-  
-  * dcat:Catalog
-  * dcat:CatalogRecord
+The following classes from DCAT_ are used: dcat:Dataset and dcat:Distribution
+(Resource). The following are optional and are not used by default in the
+outline below: dcat:Catalog and dcat:CatalogRecord.
 
 JSON serialization
 ------------------
@@ -88,23 +83,33 @@ The n3 serialization follows directly from DCAT_ since DCAT_ is an RDF vocabular
      dcat:Distribution :dataset/001/csv ;
      .
 
-Suggested DCAT Changes
-----------------------
+Proposals for changes to DCAT
+-----------------------------
+
+Various changes to DCAT have been suggested to as a result of in practice
+usage. The following summarize the proposed changes.
+
+.. note:: The following are under discussion with the W3C Government
+          Linked Data working group who are managing the DCAT specification. A
+          detailed discussion took place at the `GLD WG meeting on 26th July`_
+          and consensus resolution has been reached on almost all of them at
+          the recent GLD meeting in October - see `minutes and resolutions of
+          the meeting on 25th October 2012`_.
+
+.. _minutes and resolutions of the meeting on 25th October 2012: http://www.w3.org/2011/gld/meeting/2012-10-25
+.. _GLD WG meeting on 26th July: http://www.w3.org/2011/gld/meeting/2012-07-26
 
 Dataset concept
 ~~~~~~~~~~~~~~~
 
 * Remove dcat:accessURL and just use Resource (Distribution)
 
-  * Status: agreed and in progress
-
 * Remove dcat:dataDictionary (leave for v2 or v1.1)
 
   * Better to introduce once practice has established a need and consistent
     usage. One should be parsimonious in generating new properties at this
     early stage.
-  * Also currently has Inconsistent usage
-  * Status: ticket and discuss
+  * Also currently has inconsistent usage
 
 * Remove dcat:dataQuality (ditto)
 
@@ -119,13 +124,13 @@ Dataset concept
   * Suggest removal since for linking datasets we should have (at some point):
     derives, links_to, sibling, partof
   * Remember that people can always add other attributes they want ...
-  * Status: ticket and discuss
 
-* Make clear what is optional versus required (?)
+* (Correction) dc:updated versus dc:modified (example uses dc:updated)
+
+* Make clear what is optional versus required (?) e.g.
 
   * Designate as optional: dcterms:accrualPeriodicity
   * Designate as optional: dcat:theme
-  * Resolution: ticket and discuss
 
 Possibly to add (but will not happen for the present):
 
@@ -136,12 +141,16 @@ Distribution / Resources concept
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 * Rename dcat:Distribution to dcat:Resource
-  
+
   * Distribution has a strong connotation from software of a packaged version
     of the entire dataset whereas, in fact, in most cases it will be a data
     file or API associated to the Dataset for which the term Resource is more
     appropriate.
-  * Status: ticket and discuss
+
+* Size: define it as bytes and add sizeString. That is:
+
+  * dcat:size = number / size in bytes
+  * [Add] dcat:sizeString: informal string description size e.g. > 1Mb
 
 * Extend the set of attributes a Resource may have
 
@@ -154,10 +163,6 @@ Distribution / Resources concept
   * [Optional]: hash (md5 or sha1, must be of form md5:{hash} or sha1:{hash})
   * [Optional]: dc:created and dc:modified
 
-* Size: define it as bytes and add sizeString. That is:
-
-  * dcat:size = number / size in bytes 
-  * [Add] dcat:sizeString: informal string description size e.g. >1Mb
 
 Catalog Access, Federation and Harvesting Mechanism
 ===================================================
