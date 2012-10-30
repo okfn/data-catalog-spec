@@ -63,15 +63,15 @@
 <h2>Abstract<a class="headerlink" href="#abstract" title="Permalink to this headline">¶</a></h2>
 <p>DCIP is a specification designed to facilitate interoperability between data catalogs published on the Web by defining:</p>
 <ul class="simple">
-<li>a JSON and RDF representation for key data catalog entities such as <tt class="docutils literal"><span class="pre">Dataset(Record)</span></tt> and <tt class="docutils literal"><span class="pre">Resource</span></tt> based on the DCat vocabulary</li>
+<li>a JSON and RDF representation for key data catalog entities such as <tt class="docutils literal"><span class="pre">Dataset</span> <span class="pre">(DatasetRecord)</span></tt> and <tt class="docutils literal"><span class="pre">Resource</span> <span class="pre">(Distribution)</span></tt> based on the <a class="reference external" href="http://www.w3.org/TR/vocab-dcat/">DCAT</a> vocabulary</li>
 <li>a read only REST based protocol for achieving basic catalog interoperability</li>
 </ul>
-<p>This document discusses each of the above and provides examples. The approach is designed to be a pragmatic and easily implementable. It merges existing work on DCat with the real-life experiences of &#8220;harvesting&#8221; in various projects.</p>
+<p>This document discusses each of the above and provides examples. The approach is designed to be a pragmatic and easily implementable. It merges existing work on DCAT with the real-life experiences of &#8220;harvesting&#8221; in various projects.</p>
 <p>Publishers implementing this protocol for their catalog increase discoverability of their data and enable federation and interchange of the datasets they own. They also make it much easier for third parties to build applications based on their metadata leading to a richer ecosystem around their data.</p>
 </div>
 <div class="section" id="status-of-this-document">
 <h2>Status of This Document<a class="headerlink" href="#status-of-this-document" title="Permalink to this headline">¶</a></h2>
-<p>This document is currently in DRAFT. It has been already been the subject of consultation with interested parties and discussion will continue before being finalised. In particular, extension discussions have been had with the W3C Government Linked Data working group who are overseeing work on the <a href="#id2"><span class="problematic" id="id3">DCat_</span></a> specification and several members of that group have provided expert input and review of this specification.</p>
+<p>This document is currently in DRAFT. It has been already been the subject of consultation with interested parties and discussion will continue before being finalised. In particular, extension discussions have been had with the W3C Government Linked Data working group who are overseeing work on the <a class="reference external" href="http://www.w3.org/TR/vocab-dcat/">DCAT</a> specification and several members of that group have provided expert input and review of this specification.</p>
 <p>Ideally, at least two real-world implementations for the DRAFT should exist before the first version specification is finalised. Feedback from this real-world implementation will inform the draft.</p>
 <p>A future version of this document may also include:</p>
 <ul class="simple">
@@ -113,7 +113,7 @@
 <p>For these reasons, we choose HTTP as the underlying transport, but provide a facility for requests and responses to be signed to prove they haven&#8217;t been altered.</p>
 </div>
 <div class="section" id="jsonp-vs-json-cors-vs-dcat-n3-cors">
-<h3>JSONP vs JSON+CORS vs DCat.N3+CORS<a class="headerlink" href="#jsonp-vs-json-cors-vs-dcat-n3-cors" title="Permalink to this headline">¶</a></h3>
+<h3>JSONP vs JSON+CORS vs DCAT.N3+CORS<a class="headerlink" href="#jsonp-vs-json-cors-vs-dcat-n3-cors" title="Permalink to this headline">¶</a></h3>
 <p>A service providing JSONP responses can be used directly in any recent browser to access feeds from across different origins using a GET request. The issues with JSONP are:</p>
 <ul class="simple">
 <li>The HTTP 1.1 specification suggests that 255 bytes is the safest length of a GET request. In real life IE and Safari support 2KB. That means that requests larger than 2KB cannot be made. This is probably fine for retrieving data, but not for sending it to the server. A workaround is that for each request you generate a GUID on the client, use JavaScript to post a form with the data to the server then do a second GET request to the server with the GUID to return the result as JSONP.</li>
@@ -122,7 +122,7 @@
 </ul>
 <p>Because of these limitations we exclude JSONP from the specification but instead ensure what is proposed here is workable via a proxy server.</p>
 <p>JSON+CORS is ideal in that it allows cross-origin queries to be made by a web browser but is currently supported by just 84% of browsers, with IE6 and IE7 being notable exceptions. It is well understood with broad library support.</p>
-<p>DCat encoded as N3 is very useful for the RDF community.</p>
+<p>DCAT encoded as N3 is very useful for the RDF community.</p>
 </div>
 <div class="section" id="hash-algoritms">
 <h3>Hash Algoritms<a class="headerlink" href="#hash-algoritms" title="Permalink to this headline">¶</a></h3>
@@ -171,7 +171,7 @@
 <ul class="simple">
 <li>Dataset</li>
 </ul>
-<p>The catalog <tt class="docutils literal"><span class="pre">MUST</span></tt> support representing the <tt class="docutils literal"><span class="pre">Dataset</span></tt> entities in JSON and <tt class="docutils literal"><span class="pre">SHOULD</span></tt> support their representation as DCat encoded in N3. A full specification of the Dataset entity and its subcomponents can be found in the separate Entity Schemas sectio below.</p>
+<p>The catalog <tt class="docutils literal"><span class="pre">MUST</span></tt> support representing the <tt class="docutils literal"><span class="pre">Dataset</span></tt> entities in JSON and <tt class="docutils literal"><span class="pre">SHOULD</span></tt> support their representation as DCAT encoded in N3. A full specification of the Dataset entity and its subcomponents can be found in the separate Entity Schemas sectio below.</p>
 </div>
 <div class="section" id="url-structure">
 <h3>URL Structure<a class="headerlink" href="#url-structure" title="Permalink to this headline">¶</a></h3>
@@ -179,7 +179,7 @@
 <div class="highlight-python"><pre>&lt;endpoint&gt;/&lt;entity-name&gt;/&lt;by-entity-attribute&gt;/&lt;entity-id&gt;.&lt;format_extension&gt;</pre>
 </div>
 <p>If the endpoint is specified with a <tt class="docutils literal"><span class="pre">/</span></tt> character, this <tt class="docutils literal"><span class="pre">MUST</span></tt> be removed before computing the URL.</p>
-<p>The format extension specifies the format of any request body as well as the format of any response. The endpoint <tt class="docutils literal"><span class="pre">MUST</span></tt> support <tt class="docutils literal"><span class="pre">.json</span></tt> and <tt class="docutils literal"><span class="pre">.dcat.N3</span></tt> as the format extensions returning JSON and N3 encoded DCat respectively.</p>
+<p>The format extension specifies the format of any request body as well as the format of any response. The endpoint <tt class="docutils literal"><span class="pre">MUST</span></tt> support <tt class="docutils literal"><span class="pre">.json</span></tt> and <tt class="docutils literal"><span class="pre">.dcat.N3</span></tt> as the format extensions returning JSON and N3 encoded DCAT respectively.</p>
 <p>If a request other than a <tt class="docutils literal"><span class="pre">GET</span></tt> is made to any URL at the endpoint, a <tt class="docutils literal"><span class="pre">400</span> <span class="pre">Bad</span> <span class="pre">Response</span></tt> <tt class="docutils literal"><span class="pre">MUST</span></tt> be returned.</p>
 </div>
 <div class="section" id="response-headers">
@@ -349,7 +349,7 @@ format:
     The response should be in JSON format
 
 .dcat.N3
-    The respose will be in N3 encoded DCat RDF
+    The respose will be in N3 encoded DCAT RDF
 
 A list of all available Datasets can be found at this URL:
 
@@ -430,13 +430,13 @@ Dataset
 </div>
 <div class="section" id="entity-schema">
 <h2>5. Entity Schema<a class="headerlink" href="#entity-schema" title="Permalink to this headline">¶</a></h2>
-<p>The Schema is directly based on <a href="#id4"><span class="problematic" id="id5">DCat_</span></a> with some minor recommendations regarding specific usage and serialization.</p>
-<p>The following classes from <a href="#id6"><span class="problematic" id="id7">DCat_</span></a> are used: dcat:Dataset and dcat:Distribution
+<p>The Schema is directly based on <a class="reference external" href="http://www.w3.org/TR/vocab-dcat/">DCAT</a> with some minor recommendations regarding specific usage and serialization.</p>
+<p>The following classes from <a class="reference external" href="http://www.w3.org/TR/vocab-dcat/">DCAT</a> are used: dcat:Dataset and dcat:Distribution
 (Resource). The following are optional and are not used by default in the
 outline below: dcat:Catalog and dcat:CatalogRecord.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">Dataset vs Dataset Record. In this specification, the entities we are calling datasets are really objects which contain metadata about some actual data in a distributable form. Implementing catalogs might refer to these entities as &#8220;Metadata Records&#8221;, &#8220;Dataset Records&#8221; or &#8220;Catalog Entries&#8221;. To be consistent with DCat and implementations such as CKAN, this specification refers to this metadata as a &#8220;Dataset&#8221;.</p>
+<p class="last">Dataset vs Dataset Record. In this specification, the entities we are calling datasets are really objects which contain metadata about some actual data in a distributable form. Implementing catalogs might refer to these entities as &#8220;Metadata Records&#8221;, &#8220;Dataset Records&#8221; or &#8220;Catalog Entries&#8221;. To be consistent with DCAT and implementations such as CKAN, this specification refers to this metadata as a &#8220;Dataset&#8221;.</p>
 </div>
 <div class="section" id="empty-or-missing-values">
 <h3>Empty or Missing Values<a class="headerlink" href="#empty-or-missing-values" title="Permalink to this headline">¶</a></h3>
@@ -475,7 +475,7 @@ outline below: dcat:Catalog and dcat:CatalogRecord.</p>
   # optional
   format: [string] [dc:format] format of the file
   size: [integer] [dcat:size] file size in bytes
-  ## additions compared to DCat
+  ## additions compared to DCAT
   title: [string] [dc:title] title of this resource (e.g. file name /title )
   mimetype: [string] [] the mimetype of the file
   hash: [string] [] md5 hash of the file
@@ -483,7 +483,7 @@ outline below: dcat:Catalog and dcat:CatalogRecord.</p>
   name: [string] [] short name / slug suitable for use in a url
 }</pre>
 </div>
-<p>The n3 serialization follows directly from <a href="#id8"><span class="problematic" id="id9">DCat_</span></a> since <a href="#id10"><span class="problematic" id="id11">DCat_</span></a> is an RDF vocabulary. Full details can be found in the <a href="#id12"><span class="problematic" id="id13">DCat_</span></a> specification but we provide  one example here:</p>
+<p>The n3 serialization follows directly from <a class="reference external" href="http://www.w3.org/TR/vocab-dcat/">DCAT</a> since <a class="reference external" href="http://www.w3.org/TR/vocab-dcat/">DCAT</a> is an RDF vocabulary. Full details can be found in the <a class="reference external" href="http://www.w3.org/TR/vocab-dcat/">DCAT</a> specification but we provide  one example here:</p>
 <div class="highlight-python"><pre>:dataset/001
    a       dcat:Dataset ;
    dct:title "Imaginary dataset" ;
@@ -507,18 +507,20 @@ outline below: dcat:Catalog and dcat:CatalogRecord.</p>
 <li>Bradner. Key words for use in RFCs to Indicate Requirement Levels. March 1997. Internet RFC 2119. URL: <a class="reference external" href="http://www.ietf.org/rfc/rfc2119.txt">http://www.ietf.org/rfc/rfc2119.txt</a></li>
 </ol>
 </dd>
+<dt>DCAT</dt>
+<dd>Fadi Maali, John Erickson, Phil Archer. Data Catalog Vocabulary (DCAT). URL: <a class="reference external" href="http://www.w3.org/TR/vocab-dcat/">http://www.w3.org/TR/vocab-dcat/</a></dd>
 </dl>
 </div>
 <div class="section" id="appendicies">
 <h2>8. Appendicies<a class="headerlink" href="#appendicies" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="proposals-for-changes-to-dcat">
-<h3>Proposals for changes to DCat<a class="headerlink" href="#proposals-for-changes-to-dcat" title="Permalink to this headline">¶</a></h3>
-<p>Various changes to DCat have been suggested to as a result of in practice
+<h3>Proposals for changes to DCAT<a class="headerlink" href="#proposals-for-changes-to-dcat" title="Permalink to this headline">¶</a></h3>
+<p>Various changes to DCAT have been suggested to as a result of in practice
 usage. The following summarize the proposed changes.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">The following are under discussion with the W3C Government
-Linked Data working group who are managing the DCat specification. A
+Linked Data working group who are managing the DCAT specification. A
 detailed discussion took place at the <a class="reference external" href="http://www.w3.org/2011/gld/meeting/2012-07-26">GLD WG meeting on 26th July</a>
 and consensus resolution has been reached on almost all of them at
 the recent GLD meeting in October - see <a class="reference external" href="http://www.w3.org/2011/gld/meeting/2012-10-25">minutes and resolutions of
@@ -622,7 +624,7 @@ appropriate.</li>
 <li><a class="reference internal" href="#goal">1. Goal</a></li>
 <li><a class="reference internal" href="#technology-choices">2. Technology Choices</a><ul>
 <li><a class="reference internal" href="#http-vs-https">HTTP vs HTTPS</a></li>
-<li><a class="reference internal" href="#jsonp-vs-json-cors-vs-dcat-n3-cors">JSONP vs JSON+CORS vs DCat.N3+CORS</a></li>
+<li><a class="reference internal" href="#jsonp-vs-json-cors-vs-dcat-n3-cors">JSONP vs JSON+CORS vs DCAT.N3+CORS</a></li>
 <li><a class="reference internal" href="#hash-algoritms">Hash Algoritms</a></li>
 </ul>
 </li>
@@ -653,7 +655,7 @@ appropriate.</li>
 </li>
 <li><a class="reference internal" href="#references">7. References</a></li>
 <li><a class="reference internal" href="#appendicies">8. Appendicies</a><ul>
-<li><a class="reference internal" href="#proposals-for-changes-to-dcat">Proposals for changes to DCat</a><ul>
+<li><a class="reference internal" href="#proposals-for-changes-to-dcat">Proposals for changes to DCAT</a><ul>
 <li><a class="reference internal" href="#dataset-concept">Dataset concept</a></li>
 <li><a class="reference internal" href="#distribution-resources-concept">Distribution / Resources concept</a></li>
 </ul>
