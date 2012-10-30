@@ -6,17 +6,19 @@ Abstract
 
 DCIP is a specification designed to facilitate interoperability between data catalogs published on the Web by defining:
 
-* a JSON and RDF representation for key data catalog entities such as ``Dataset(Record)`` and ``Resource`` based on the DCat vocabulary
+* a JSON and RDF representation for key data catalog entities such as ``Dataset (DatasetRecord)`` and ``Resource (Distribution)`` based on the DCAT_ vocabulary
 * a read only REST based protocol for achieving basic catalog interoperability
 
-This document discusses each of the above and provides examples. The approach is designed to be a pragmatic and easily implementable. It merges existing work on DCat with the real-life experiences of "harvesting" in various projects.
+This document discusses each of the above and provides examples. The approach is designed to be a pragmatic and easily implementable. It merges existing work on DCAT with the real-life experiences of "harvesting" in various projects.
 
 Publishers implementing this protocol for their catalog increase discoverability of their data and enable federation and interchange of the datasets they own. They also make it much easier for third parties to build applications based on their metadata leading to a richer ecosystem around their data.
+
+.. _DCAT: http://www.w3.org/TR/vocab-dcat/
 
 Status of This Document
 =======================
 
-This document is currently in DRAFT. It has been already been the subject of consultation with interested parties and discussion will continue before being finalised. In particular, extension discussions have been had with the W3C Government Linked Data working group who are overseeing work on the DCat_ specification and several members of that group have provided expert input and review of this specification.
+This document is currently in DRAFT. It has been already been the subject of consultation with interested parties and discussion will continue before being finalised. In particular, extension discussions have been had with the W3C Government Linked Data working group who are overseeing work on the DCAT_ specification and several members of that group have provided expert input and review of this specification.
 
 Ideally, at least two real-world implementations for the DRAFT should exist before the first version specification is finalised. Feedback from this real-world implementation will inform the draft.
 
@@ -60,7 +62,7 @@ The most obvious choice for an underlying protocol on which to base DCIP is HTTP
 
 For these reasons, we choose HTTP as the underlying transport, but provide a facility for requests and responses to be signed to prove they haven't been altered.
 
-JSONP vs JSON+CORS vs DCat.N3+CORS
+JSONP vs JSON+CORS vs DCAT.N3+CORS
 ----------------------------------
 
 A service providing JSONP responses can be used directly in any recent browser to access feeds from across different origins using a GET request. The issues with JSONP are:
@@ -73,7 +75,7 @@ Because of these limitations we exclude JSONP from the specification but instead
 
 JSON+CORS is ideal in that it allows cross-origin queries to be made by a web browser but is currently supported by just 84% of browsers, with IE6 and IE7 being notable exceptions. It is well understood with broad library support.
 
-DCat encoded as N3 is very useful for the RDF community.
+DCAT encoded as N3 is very useful for the RDF community.
 
 Hash Algoritms
 --------------
@@ -130,7 +132,7 @@ The Basic REST API defines just one entity at present:
 
 * Dataset
 
-The catalog ``MUST`` support representing the ``Dataset`` entities in JSON and ``SHOULD`` support their representation as DCat encoded in N3. A full specification of the Dataset entity and its subcomponents can be found in the separate Entity Schemas sectio below.
+The catalog ``MUST`` support representing the ``Dataset`` entities in JSON and ``SHOULD`` support their representation as DCAT encoded in N3. A full specification of the Dataset entity and its subcomponents can be found in the separate Entity Schemas sectio below.
 
 
 URL Structure
@@ -144,7 +146,7 @@ URLs are assembled like this:
 
 If the endpoint is specified with a ``/`` character, this ``MUST`` be removed before computing the URL.
 
-The format extension specifies the format of any request body as well as the format of any response. The endpoint ``MUST`` support ``.json`` and ``.dcat.N3`` as the format extensions returning JSON and N3 encoded DCat respectively.
+The format extension specifies the format of any request body as well as the format of any response. The endpoint ``MUST`` support ``.json`` and ``.dcat.N3`` as the format extensions returning JSON and N3 encoded DCAT respectively.
 
 If a request other than a ``GET`` is made to any URL at the endpoint, a ``400 Bad Response`` ``MUST`` be returned.
 
@@ -371,7 +373,7 @@ The help text below ``MAY`` be used but the URLs ``MUST`` be suitably adjusted:
         The response should be in JSON format
     
     .dcat.N3
-        The respose will be in N3 encoded DCat RDF
+        The respose will be in N3 encoded DCAT RDF
 
     A list of all available Datasets can be found at this URL:
 
@@ -473,15 +475,13 @@ No caching methodoloy is specified by this specification. It is likely a future 
 5. Entity Schema
 ================
 
-The Schema is directly based on DCat_ with some minor recommendations regarding specific usage and serialization.
+The Schema is directly based on DCAT_ with some minor recommendations regarding specific usage and serialization.
 
-.. _DCat: http://www.w3.org/TR/vocab-dcat/
-
-The following classes from DCat_ are used: dcat:Dataset and dcat:Distribution
+The following classes from DCAT_ are used: dcat:Dataset and dcat:Distribution
 (Resource). The following are optional and are not used by default in the
 outline below: dcat:Catalog and dcat:CatalogRecord.
 
-.. note:: Dataset vs Dataset Record. In this specification, the entities we are calling datasets are really objects which contain metadata about some actual data in a distributable form. Implementing catalogs might refer to these entities as "Metadata Records", "Dataset Records" or "Catalog Entries". To be consistent with DCat and implementations such as CKAN, this specification refers to this metadata as a "Dataset".
+.. note:: Dataset vs Dataset Record. In this specification, the entities we are calling datasets are really objects which contain metadata about some actual data in a distributable form. Implementing catalogs might refer to these entities as "Metadata Records", "Dataset Records" or "Catalog Entries". To be consistent with DCAT and implementations such as CKAN, this specification refers to this metadata as a "Dataset".
 
 Empty or Missing Values
 -----------------------
@@ -525,7 +525,7 @@ Resources are a dcat:Distribution (and sub-types thereof)::
     # optional
     format: [string] [dc:format] format of the file
     size: [integer] [dcat:size] file size in bytes
-    ## additions compared to DCat
+    ## additions compared to DCAT
     title: [string] [dc:title] title of this resource (e.g. file name /title )
     mimetype: [string] [] the mimetype of the file
     hash: [string] [] md5 hash of the file
@@ -534,7 +534,7 @@ Resources are a dcat:Distribution (and sub-types thereof)::
   }
 
 
-The n3 serialization follows directly from DCat_ since DCat_ is an RDF vocabulary. Full details can be found in the DCat_ specification but we provide  one example here::
+The n3 serialization follows directly from DCAT_ since DCAT_ is an RDF vocabulary. Full details can be found in the DCAT_ specification but we provide  one example here::
 
   :dataset/001
      a       dcat:Dataset ;
@@ -555,20 +555,20 @@ The n3 serialization follows directly from DCat_ since DCat_ is an RDF vocabular
 RFC2119
     S. Bradner. Key words for use in RFCs to Indicate Requirement Levels. March 1997. Internet RFC 2119. URL: http://www.ietf.org/rfc/rfc2119.txt 
 
-.. _DCat: http://dvcs.w3.org/hg/gld/raw-file/default/dcat/index.html
-
+DCAT
+    Fadi Maali, John Erickson, Phil Archer. Data Catalog Vocabulary (DCAT). URL: http://www.w3.org/TR/vocab-dcat/
 
 8. Appendicies
 ==============
 
-Proposals for changes to DCat
+Proposals for changes to DCAT
 -----------------------------
 
-Various changes to DCat have been suggested to as a result of in practice
+Various changes to DCAT have been suggested to as a result of in practice
 usage. The following summarize the proposed changes.
 
 .. note:: The following are under discussion with the W3C Government
-          Linked Data working group who are managing the DCat specification. A
+          Linked Data working group who are managing the DCAT specification. A
           detailed discussion took place at the `GLD WG meeting on 26th July`_
           and consensus resolution has been reached on almost all of them at
           the recent GLD meeting in October - see `minutes and resolutions of
