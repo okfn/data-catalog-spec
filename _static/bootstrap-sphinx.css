@@ -4,12 +4,16 @@
 *
 * Sphinx stylesheet -- Twitter Bootstrap theme.
 */
+
+@import url(http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700);
+@import url(http://fonts.googleapis.com/css?family=PT+Mono);
+
 html, body {
   background-color: #eee;
 }
 
 body {
-  padding-top: 50px;
+  padding-top: 42px;
   padding-bottom: 40px;
 }
 
@@ -17,9 +21,9 @@ body {
 /**************** Typo *************************/
 
 body, p, blockquote p {
-  font-family: Palatino, georgia, 'times new roman', serif;
-  font-size: 16px;
-  line-height: 25px;
+  font-family: 'PT Sans',Helvetica,Arial,sans-serif;
+  font-size: 18px;
+  line-height: 24px;
 }
 
 li {
@@ -27,12 +31,24 @@ li {
 }
 
 h1 {
-  font-size: 36px;
+  font-size: 42px;
+  line-height: 50px;
   margin-bottom: 15px;
 }
 
 h2 {
   line-height: 50px;
+  font-size: 36px;
+}
+
+h3 {
+  font-size: 30px;
+  line-height: 40px;
+}
+
+h4 {
+  font-size: 24px;
+  line-height: 30px;
 }
 
 blockquote p {
@@ -46,39 +62,99 @@ a {
 
 /* code styling */
 
-.docutils.literal {
-  padding: 0 3px 2px;
-  font-family: Menlo, Monaco, "Courier New", monospace;
-  font-size: 12px;
-  color: #333333;
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
+.docutils.literal, code, pre {
+  font-family: "PT Mono", Menlo, Monaco, "Courier New", monospace;
+}
 
-  padding: 3px 4px;
+.docutils.literal {
+  padding: 0 2px;
   color: #d14;
-  background-color: #f7f7f9;
-  border: 1px solid #e1e1e8;
+}
+
+pre, code {
+  margin: 1em 0 1em 2em;;
+  font-size: 14px;
+  white-space: pre;
+}
+
+/****************** Admonitions *********************/
+
+/* Shared by admonitions, warnings and sidebars */
+div.admonition,
+div.warning {
+    font-size: 0.9em;
+    margin: 2em;
+    padding: 0;
+    /*
+    border-radius: 6px;
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    */
+}
+div.admonition p,
+div.warning p {
+    margin: 0.5em 1em 0.5em 1em;
+    padding: 0;
+}
+div.admonition pre,
+div.warning pre {
+    margin: 0.4em 1em 0.4em 1em;
+}
+div.admonition p.admonition-title,
+div.warning p.admonition-title {
+    margin: 0;
+    padding: 0.1em 0 0.1em 0.5em;
+    color: white;
+    font-weight: bold;
+    font-size: 1.1em;
+    text-shadow: 0 1px rgba(0, 0, 0, 0.5);
+}
+div.admonition ul, div.admonition ol,
+div.warning ul, div.warning ol {
+    margin: 0.1em 0.5em 0.5em 3em;
+    padding: 0;
+}
+
+/* Admonitions and sidebars only */
+div.admonition {
+    border: 1px solid #609060;
+    background-color: #e9ffe9;
+}
+div.admonition p.admonition-title {
+    background-color: #70A070;
+    border-bottom: 1px solid #609060;
+}
+
+
+/* Warnings only */
+div.warning {
+    border: 1px solid #900000;
+    background-color: #ffe9e9;
+}
+div.warning p.admonition-title {
+    background-color: #b04040;
+    border-bottom: 1px solid #900000;
 }
 
 /****************** Simpler Navbar *********************/
+
+.navbar {
+  font-family: "PT Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 13px;
+}
 
 .navbar-inner {
   border-radius: 4px;
   -webkit-box-shadow: 0 1px 10px rgba(0, 0, 0, 0.25), inset 0 -1px 0 rgba(0, 0, 0, 0.1);
   -moz-box-shadow: 0 1px 10px rgba(0, 0, 0, 0.25), inset 0 -1px 0 rgba(0, 0, 0, 0.1);
   box-shadow: 0 1px 10px rgba(0, 0, 0, 0.25), inset 0 -1px 0 rgba(0, 0, 0, 0.1);
-  padding-top: 0.5em;
-  padding-bottom: 0.5em;
+  padding-top: 0.3em;
+  padding-bottom: 0.2em;
 }
 
 .navbar .brand,
 .navbar-search .search-query,
 .navbar-search .search-query:hover {
-}
-
-.navbar a.brand {
-  font-weight: bold;
 }
 
 .navbar .brand .version {
@@ -100,6 +176,10 @@ div.sphinxsidebarwrapper {
 
 div.sphinxsidebar, div.sphinxsidebar p {
   font-size: 14px;
+}
+
+div.sphinxsidebar ul, div.sphinxsidebar ul ul {
+  list-style-type: none;
 }
 
 .toc > ul {
@@ -169,30 +249,8 @@ footer {
   margin-bottom: 0px;
 }
 
-@font-face {
-  font-family: 'OpenSansLight';
-  src: url('font/opensans/opensans-light-webfont.eot');
-  src: url('font/opensans/opensans-light-webfont.eot?#iefix') format('embedded-opentype'), url('font/opensans/opensans-light-webfont.woff') format('woff'), url('font/opensans/opensans-light-webfont.ttf') format('truetype'), url('font/opensans/opensans-light-webfont.svg#OpenSansLight') format('svg');
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-    font-family: "OpenSansSemibold";
-    font-style: normal;
-    font-weight: 600;
-    src: url("font/opensans/opensans-semibold-webfont.eot?#iefix") format("embedded-opentype"), url("font/opensans/opensans-semibold-webfont.woff") format("woff"), url("font/opensans/opensans-semibold-webfont.ttf") format("truetype"), url("font/opensans/opensans-semibold-webfont.svg#OpenSansLight") format("svg");
-}
-
-.navbar {
-  font-family: "OpenSansLight", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 13px;
-  line-height: 18px;
-}
-
 footer,
 footer p {
-  font-family: "OpenSansLight", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 13px;
   line-height: 22px;
 }
