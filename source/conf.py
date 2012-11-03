@@ -40,7 +40,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'Data Catalog Interoperability Protocol'
+project = u'Data Catalog Interoperability Protocol (DCIP)'
 copyright = u'2012, Various'
 
 # The version info for the project you're documenting, acts as replacement for

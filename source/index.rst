@@ -1,5 +1,12 @@
-Data Catalog Interoperability Protocol (DCIP)
-+++++++++++++++++++++++++++++++++++++++++++++
+Data Catalog Interoperability Protocol
+++++++++++++++++++++++++++++++++++++++
+
+:Editors: Rufus Pollock (Open Knowledge Foundation), James Gardner (3aims)
+
+.. note:: This proposal reflects the contribution of many people over a substantial period. In particular, there are the participants at the first `Data Catalog Interoperability Workshop`_ in Edinburgh in May 2011 (organized under the auspices of the LOD2 project), as well as the members of the `data-catalogs group and mailing list`_ where this specification has been discussed on an ongoing basis. Among those who have provided expert feedback or input are: Phil Archer (W3C), Martin Alvarez-Espinar (CTIC), Richard Cyganiak (DERI), John Erickson (RPI), Chris Gutteridge (Southampton University), Jim Hendler (RPI), Faadi Mali (DERI), Ed Summers (Library of Congress)
+
+.. _Data Catalog Interoperability Workshop: http://lod2.okfn.org/2011/05/04/notes-from-data-catalogues-interoperability-workshop-edinburgh-3-4th-may-2011/
+.. _data-catalogs group and mailing list: http://lists.okfn.org/mailman/listinfo/data-catalogs
 
 Abstract
 ========
