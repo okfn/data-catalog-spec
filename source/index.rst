@@ -59,31 +59,8 @@ Also to consider:
 1. As an application or catalog I may want to know that the information I receive from from another catalog  has not been changed by a man in the middle so that I am confident that I  can safely provide the same information to my users
 2. As a catalog I want to know who is making use of my APIs so that I can give them the results they are allowed access to or adjust how my resources are used.
 
-2. Technology Choices
-=====================
 
-JSONP vs JSON+CORS vs DCAT.N3+CORS
-----------------------------------
-
-A service providing JSONP responses can be used directly in any recent browser to access feeds from across different origins using a GET request. The issues with JSONP are:
-
-* The HTTP 1.1 specification suggests that 255 bytes is the safest length of a GET request. In real life IE and Safari support 2KB. That means that requests larger than 2KB cannot be made. This is probably fine for retrieving data, but not for sending it to the server. A workaround is that for each request you generate a GUID on the client, use JavaScript to post a form with the data to the server then do a second GET request to the server with the GUID to return the result as JSONP.
-* A malicious or compromised server can inject JavaScript into a client page with JSONP
-* A service wanting to support old browsers, can always proxy information to the origin server anyway and safely serve JSON.
-
-Because of these limitations we exclude JSONP from the specification but instead ensure what is proposed here is workable via a proxy server.
-
-JSON+CORS is ideal in that it allows cross-origin queries to be made by a web browser but is currently supported by just 84% of browsers, with IE6 and IE7 being notable exceptions. It is well understood with broad library support.
-
-DCAT encoded as N3 is very useful for the RDF community.
-
-Hash Algoritms
---------------
-
-We use SHA-256 since SHA-1 has vulnerabilities and SHA-512 takes longer to hash according to http://stackoverflow.com/a/3897457. It is also what Facebook use for their ``signed_request``.
-
-
-3. Conformance
+2. Conformance
 ==============
 
 The key words ``MUST``, ``MUST NOT``, ``REQUIRED``, ``SHOULD``, ``SHOULD NOT``, ``RECOMMENDED``, ``MAY``, and ``OPTIONAL`` in this specification are to be interpreted as described in [RFC2119].
@@ -91,7 +68,7 @@ The key words ``MUST``, ``MUST NOT``, ``REQUIRED``, ``SHOULD``, ``SHOULD NOT``, 
 * DCIP compliance means that a data catalog provides an API that is a subset of the APIs defined in one of the conformance levels.
 * DCIP conformance means that a data catalog provides the entire API specified for that conformance level
 
-4. REST API
+3. REST API
 ===========
 
 The DCIP specification defines a simple REST API. A catalog that conforms to this API exposes enough information for another catalog to store copies of the first catalog's dataset information as well as discover which datasets have changed.
@@ -472,7 +449,7 @@ Caching
 No caching methodoloy is specified by this specification. It is likely a future specification will recommend Etag caching for both Dataset entities and lists of entities.
 
 
-5. Entity Schema
+4. Entity Schema
 ================
 
 The Schema is directly based on DCAT_ with some minor recommendations regarding specific usage and serialization.
@@ -549,7 +526,7 @@ The n3 serialization follows directly from DCAT_ since DCAT_ is an RDF vocabular
      dcat:Distribution :dataset/001/csv ;
      .
 
-7. References
+6. References
 =============
 
 RFC2119
@@ -558,8 +535,28 @@ RFC2119
 DCAT
     Fadi Maali, John Erickson, Phil Archer. Data Catalog Vocabulary (DCAT). URL: http://www.w3.org/TR/vocab-dcat/
 
-8. Appendicies
+7. Appendicies
 ==============
+
+JSONP vs JSON+CORS vs DCAT.N3+CORS
+----------------------------------
+
+A service providing JSONP responses can be used directly in any recent browser to access feeds from across different origins using a GET request. The issues with JSONP are:
+
+* The HTTP 1.1 specification suggests that 255 bytes is the safest length of a GET request. In real life IE and Safari support 2KB. That means that requests larger than 2KB cannot be made. This is probably fine for retrieving data, but not for sending it to the server. A workaround is that for each request you generate a GUID on the client, use JavaScript to post a form with the data to the server then do a second GET request to the server with the GUID to return the result as JSONP.
+* A malicious or compromised server can inject JavaScript into a client page with JSONP
+* A service wanting to support old browsers, can always proxy information to the origin server anyway and safely serve JSON.
+
+Because of these limitations we exclude JSONP from the specification but instead ensure what is proposed here is workable via a proxy server.
+
+JSON+CORS is ideal in that it allows cross-origin queries to be made by a web browser but is currently supported by just 84% of browsers, with IE6 and IE7 being notable exceptions. It is well understood with broad library support.
+
+DCAT encoded as N3 is very useful for the RDF community.
+
+Hash Algoritms
+--------------
+
+We use SHA-256 since SHA-1 has vulnerabilities and SHA-512 takes longer to hash according to http://stackoverflow.com/a/3897457. It is also what Facebook use for their ``signed_request``.
 
 Proposals for changes to DCAT
 -----------------------------
