@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="_static/css/bootstrap.css" type="text/css" />
+    <link rel="stylesheet" href="_static/css/fix.css" type="text/css" />
     <link rel="stylesheet" href="_static/css/bootstrap-responsive.css" type="text/css" />
     <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
     
@@ -35,7 +36,7 @@
   
   <div class="navbar navbar-fixed-top">
     <div class="navbar-inner">
-      <div class="container">
+      <div class="container-fluid">
         
         <a class="brand" href="#">Data Catalog Interoperability Protocol (DCIP)<span class="version"> v0.2</span></a>
         
@@ -52,8 +53,82 @@
     </div>
   </div>
 
-<div class="container">
-  <div class="row">
+<div class="container-fluid">
+  <div class="row-fluid">
+    <div class="span4">
+      <div class="well sidebar-nav">
+        
+          
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><div>
+  <h3>Contents</h3>
+  <ul>
+<li><a class="reference internal" href="#">Data Catalog Interoperability Protocol</a><ul>
+<li><a class="reference internal" href="#abstract">Abstract</a></li>
+<li><a class="reference internal" href="#status-of-this-document">Status of This Document</a></li>
+<li><a class="reference internal" href="#goal">1. Goal</a></li>
+<li><a class="reference internal" href="#conformance">2. Conformance</a></li>
+<li><a class="reference internal" href="#rest-api">3. REST API</a><ul>
+<li><a class="reference internal" href="#purpose">Purpose</a></li>
+<li><a class="reference internal" href="#glossary">Glossary</a></li>
+<li><a class="reference internal" href="#api-endpoint">API Endpoint</a></li>
+<li><a class="reference internal" href="#entities">Entities</a></li>
+<li><a class="reference internal" href="#url-structure">URL Structure</a></li>
+<li><a class="reference internal" href="#response-headers">Response Headers</a></li>
+<li><a class="reference internal" href="#read-dataset-api-call">Read Dataset API Call</a></li>
+<li><a class="reference internal" href="#list-dataset-api-call">List Dataset API Call</a><ul>
+<li><a class="reference internal" href="#response-format">Response Format</a></li>
+<li><a class="reference internal" href="#example">Example</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#help-dataset-api-call">Help Dataset API Call</a></li>
+<li><a class="reference internal" href="#api-help-call">API Help Call</a></li>
+<li><a class="reference internal" href="#extensions">Extensions</a></li>
+<li><a class="reference internal" href="#caching">Caching</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#entity-schema">4. Entity Schema</a><ul>
+<li><a class="reference internal" href="#empty-or-missing-values">Empty or Missing Values</a></li>
+<li><a class="reference internal" href="#dataset">Dataset</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#references">6. References</a></li>
+<li><a class="reference internal" href="#appendicies">7. Appendicies</a><ul>
+<li><a class="reference internal" href="#jsonp-vs-json-cors-vs-dcat-n3-cors">JSONP vs JSON+CORS vs DCAT.N3+CORS</a></li>
+<li><a class="reference internal" href="#hash-algoritms">Hash Algoritms</a></li>
+<li><a class="reference internal" href="#proposals-for-changes-to-dcat">Proposals for changes to DCAT</a><ul>
+<li><a class="reference internal" href="#dataset-concept">Dataset concept</a></li>
+<li><a class="reference internal" href="#distribution-resources-concept">Distribution / Resources concept</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#potential-catalog-entity-attributes">Potential Catalog Entity Attributes</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+  <h3>Contribute</h3>
+  <p>Contributions, comments and corrections are warmly welcomed. They can
+  be submitted via one of the following routes:</p>
+  <ol>
+    <li>A patch to the <a
+    href="https://github.com/dataprotocols/data-catalog-spec">git repo</a> (fork and pull
+  recommended) &ndash; best for textual corrections and additions</li>
+  <li>The <a
+    href="http://lists.okfn.org/mailman/listinfo/data-catalogs">mailing
+    list</a> &ndash; best for general discussion</li>
+    <li>The <a href="https://github.com/dataprotocols/data-catalog-spec/issues">issue
+      tracker</a> &ndash; best for general issues or suggestions</li>
+  </ol>
+</div>
+
+        </div>
+      </div>
+        
+      </div><!--/.well -->
+    </div><!--/span-->
     <div class="span8">
       <div class="content">
        
@@ -64,6 +139,12 @@
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Editors:</th><td class="field-body">Rufus Pollock (Open Knowledge Foundation), James Gardner (3aims)</td>
+</tr>
+<tr class="field-even field"><th class="field-name"><strong>Version</strong>:</th><td class="field-body">1.0-beta.2</td>
+</tr>
+<tr class="field-odd field"><th class="field-name"><strong>Last Updated</strong>:</th><td class="field-body">10 May 2013</td>
+</tr>
+<tr class="field-even field"><th class="field-name"><strong>Created</strong>:</th><td class="field-body">16 April 2012</td>
 </tr>
 </tbody>
 </table>
@@ -113,36 +194,8 @@
 <li>As a catalog I want to know who is making use of my APIs so that I can give them the results they are allowed access to or adjust how my resources are used.</li>
 </ol>
 </div>
-<div class="section" id="technology-choices">
-<h2>2. Technology Choices<a class="headerlink" href="#technology-choices" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="http-vs-https">
-<h3>HTTP vs HTTPS<a class="headerlink" href="#http-vs-https" title="Permalink to this headline">¶</a></h3>
-<p>The most obvious choice for an underlying protocol on which to base DCIP is HTTP. It meets all the criteria 1-5 above and can be used as a basis for all user stories 1-5. User story 3. is about ensuring data received from other servers can be trusted. One way to ensure this would be to mandate HTTPS as the standard transport, but this has its own difficulties, namely that:</p>
-<ul class="simple">
-<li>HTTPS servers each have to have their own IP address. Many existing catalogs run on IPv4 networks where IP addresses are in short supply. If HTTPS was the standard, significant deployment changes may have to be made to existing infrastructure and this would break go against criteria 2. and 3. above.</li>
-<li>HTTPS servers require certificates. Managing certificates puts additional overhead on catalogs that might not otherwise use them. If you want to guarantee that your HTTPS certificate authorities are recognised by very old browsers, and you want to meet criteria 5 above, you have to buy certificates from expensive providers otherwise users accessing a service from a web browser may be asked whether they trust the certificates.</li>
-</ul>
-<p>For these reasons, we choose HTTP as the underlying transport, but provide a facility for requests and responses to be signed to prove they haven&#8217;t been altered.</p>
-</div>
-<div class="section" id="jsonp-vs-json-cors-vs-dcat-n3-cors">
-<h3>JSONP vs JSON+CORS vs DCAT.N3+CORS<a class="headerlink" href="#jsonp-vs-json-cors-vs-dcat-n3-cors" title="Permalink to this headline">¶</a></h3>
-<p>A service providing JSONP responses can be used directly in any recent browser to access feeds from across different origins using a GET request. The issues with JSONP are:</p>
-<ul class="simple">
-<li>The HTTP 1.1 specification suggests that 255 bytes is the safest length of a GET request. In real life IE and Safari support 2KB. That means that requests larger than 2KB cannot be made. This is probably fine for retrieving data, but not for sending it to the server. A workaround is that for each request you generate a GUID on the client, use JavaScript to post a form with the data to the server then do a second GET request to the server with the GUID to return the result as JSONP.</li>
-<li>A malicious or compromised server can inject JavaScript into a client page with JSONP</li>
-<li>A service wanting to support old browsers, can always proxy information to the origin server anyway and safely serve JSON.</li>
-</ul>
-<p>Because of these limitations we exclude JSONP from the specification but instead ensure what is proposed here is workable via a proxy server.</p>
-<p>JSON+CORS is ideal in that it allows cross-origin queries to be made by a web browser but is currently supported by just 84% of browsers, with IE6 and IE7 being notable exceptions. It is well understood with broad library support.</p>
-<p>DCAT encoded as N3 is very useful for the RDF community.</p>
-</div>
-<div class="section" id="hash-algoritms">
-<h3>Hash Algoritms<a class="headerlink" href="#hash-algoritms" title="Permalink to this headline">¶</a></h3>
-<p>We use SHA-256 since SHA-1 has vulnerabilities and SHA-512 takes longer to hash according to <a class="reference external" href="http://stackoverflow.com/a/3897457">http://stackoverflow.com/a/3897457</a>. It is also what Facebook use for their <tt class="docutils literal"><span class="pre">signed_request</span></tt>.</p>
-</div>
-</div>
 <div class="section" id="conformance">
-<h2>3. Conformance<a class="headerlink" href="#conformance" title="Permalink to this headline">¶</a></h2>
+<h2>2. Conformance<a class="headerlink" href="#conformance" title="Permalink to this headline">¶</a></h2>
 <p>The key words <tt class="docutils literal"><span class="pre">MUST</span></tt>, <tt class="docutils literal"><span class="pre">MUST</span> <span class="pre">NOT</span></tt>, <tt class="docutils literal"><span class="pre">REQUIRED</span></tt>, <tt class="docutils literal"><span class="pre">SHOULD</span></tt>, <tt class="docutils literal"><span class="pre">SHOULD</span> <span class="pre">NOT</span></tt>, <tt class="docutils literal"><span class="pre">RECOMMENDED</span></tt>, <tt class="docutils literal"><span class="pre">MAY</span></tt>, and <tt class="docutils literal"><span class="pre">OPTIONAL</span></tt> in this specification are to be interpreted as described in [RFC2119].</p>
 <ul class="simple">
 <li>DCIP compliance means that a data catalog provides an API that is a subset of the APIs defined in one of the conformance levels.</li>
@@ -150,7 +203,7 @@
 </ul>
 </div>
 <div class="section" id="rest-api">
-<h2>4. REST API<a class="headerlink" href="#rest-api" title="Permalink to this headline">¶</a></h2>
+<h2>3. REST API<a class="headerlink" href="#rest-api" title="Permalink to this headline">¶</a></h2>
 <p>The DCIP specification defines a simple REST API. A catalog that conforms to this API exposes enough information for another catalog to store copies of the first catalog&#8217;s dataset information as well as discover which datasets have changed.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -441,7 +494,7 @@ Dataset
 </div>
 </div>
 <div class="section" id="entity-schema">
-<h2>5. Entity Schema<a class="headerlink" href="#entity-schema" title="Permalink to this headline">¶</a></h2>
+<h2>4. Entity Schema<a class="headerlink" href="#entity-schema" title="Permalink to this headline">¶</a></h2>
 <p>The Schema is directly based on <a class="reference external" href="http://www.w3.org/TR/vocab-dcat/">DCAT</a> with some minor recommendations regarding specific usage and serialization.</p>
 <p>The following classes from <a class="reference external" href="http://www.w3.org/TR/vocab-dcat/">DCAT</a> are used: dcat:Dataset and dcat:Distribution
 (Resource). The following are optional and are not used by default in the
@@ -512,7 +565,7 @@ outline below: dcat:Catalog and dcat:CatalogRecord.</p>
 </div>
 </div>
 <div class="section" id="references">
-<h2>7. References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
+<h2>6. References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
 <dl class="docutils">
 <dt>RFC2119</dt>
 <dd><ol class="first last upperalpha simple" start="19">
@@ -524,7 +577,23 @@ outline below: dcat:Catalog and dcat:CatalogRecord.</p>
 </dl>
 </div>
 <div class="section" id="appendicies">
-<h2>8. Appendicies<a class="headerlink" href="#appendicies" title="Permalink to this headline">¶</a></h2>
+<h2>7. Appendicies<a class="headerlink" href="#appendicies" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="jsonp-vs-json-cors-vs-dcat-n3-cors">
+<h3>JSONP vs JSON+CORS vs DCAT.N3+CORS<a class="headerlink" href="#jsonp-vs-json-cors-vs-dcat-n3-cors" title="Permalink to this headline">¶</a></h3>
+<p>A service providing JSONP responses can be used directly in any recent browser to access feeds from across different origins using a GET request. The issues with JSONP are:</p>
+<ul class="simple">
+<li>The HTTP 1.1 specification suggests that 255 bytes is the safest length of a GET request. In real life IE and Safari support 2KB. That means that requests larger than 2KB cannot be made. This is probably fine for retrieving data, but not for sending it to the server. A workaround is that for each request you generate a GUID on the client, use JavaScript to post a form with the data to the server then do a second GET request to the server with the GUID to return the result as JSONP.</li>
+<li>A malicious or compromised server can inject JavaScript into a client page with JSONP</li>
+<li>A service wanting to support old browsers, can always proxy information to the origin server anyway and safely serve JSON.</li>
+</ul>
+<p>Because of these limitations we exclude JSONP from the specification but instead ensure what is proposed here is workable via a proxy server.</p>
+<p>JSON+CORS is ideal in that it allows cross-origin queries to be made by a web browser but is currently supported by just 84% of browsers, with IE6 and IE7 being notable exceptions. It is well understood with broad library support.</p>
+<p>DCAT encoded as N3 is very useful for the RDF community.</p>
+</div>
+<div class="section" id="hash-algoritms">
+<h3>Hash Algoritms<a class="headerlink" href="#hash-algoritms" title="Permalink to this headline">¶</a></h3>
+<p>We use SHA-256 since SHA-1 has vulnerabilities and SHA-512 takes longer to hash according to <a class="reference external" href="http://stackoverflow.com/a/3897457">http://stackoverflow.com/a/3897457</a>. It is also what Facebook use for their <tt class="docutils literal"><span class="pre">signed_request</span></tt>.</p>
+</div>
 <div class="section" id="proposals-for-changes-to-dcat">
 <h3>Proposals for changes to DCAT<a class="headerlink" href="#proposals-for-changes-to-dcat" title="Permalink to this headline">¶</a></h3>
 <p>Various changes to DCAT have been suggested to as a result of in practice
@@ -622,91 +691,12 @@ appropriate.</li>
 
       </div>
     </div>
-    <div class="span4">
-      <div class="well sidebar-nav">
-        
-          
-      <div class="sphinxsidebar">
-        <div class="sphinxsidebarwrapper"><div class="widget toc">
-  <h3>On this Page</h3>
-  <ul>
-<li><a class="reference internal" href="#">Data Catalog Interoperability Protocol</a><ul>
-<li><a class="reference internal" href="#abstract">Abstract</a></li>
-<li><a class="reference internal" href="#status-of-this-document">Status of This Document</a></li>
-<li><a class="reference internal" href="#goal">1. Goal</a></li>
-<li><a class="reference internal" href="#technology-choices">2. Technology Choices</a><ul>
-<li><a class="reference internal" href="#http-vs-https">HTTP vs HTTPS</a></li>
-<li><a class="reference internal" href="#jsonp-vs-json-cors-vs-dcat-n3-cors">JSONP vs JSON+CORS vs DCAT.N3+CORS</a></li>
-<li><a class="reference internal" href="#hash-algoritms">Hash Algoritms</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#conformance">3. Conformance</a></li>
-<li><a class="reference internal" href="#rest-api">4. REST API</a><ul>
-<li><a class="reference internal" href="#purpose">Purpose</a></li>
-<li><a class="reference internal" href="#glossary">Glossary</a></li>
-<li><a class="reference internal" href="#api-endpoint">API Endpoint</a></li>
-<li><a class="reference internal" href="#entities">Entities</a></li>
-<li><a class="reference internal" href="#url-structure">URL Structure</a></li>
-<li><a class="reference internal" href="#response-headers">Response Headers</a></li>
-<li><a class="reference internal" href="#read-dataset-api-call">Read Dataset API Call</a></li>
-<li><a class="reference internal" href="#list-dataset-api-call">List Dataset API Call</a><ul>
-<li><a class="reference internal" href="#response-format">Response Format</a></li>
-<li><a class="reference internal" href="#example">Example</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#help-dataset-api-call">Help Dataset API Call</a></li>
-<li><a class="reference internal" href="#api-help-call">API Help Call</a></li>
-<li><a class="reference internal" href="#extensions">Extensions</a></li>
-<li><a class="reference internal" href="#caching">Caching</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#entity-schema">5. Entity Schema</a><ul>
-<li><a class="reference internal" href="#empty-or-missing-values">Empty or Missing Values</a></li>
-<li><a class="reference internal" href="#dataset">Dataset</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#references">7. References</a></li>
-<li><a class="reference internal" href="#appendicies">8. Appendicies</a><ul>
-<li><a class="reference internal" href="#proposals-for-changes-to-dcat">Proposals for changes to DCAT</a><ul>
-<li><a class="reference internal" href="#dataset-concept">Dataset concept</a></li>
-<li><a class="reference internal" href="#distribution-resources-concept">Distribution / Resources concept</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#potential-catalog-entity-attributes">Potential Catalog Entity Attributes</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
-</div>
-<div>
-  <h3>Contribute</h3>
-  <p>Contributions, comments and corrections are warmly welcomed. They can
-  be submitted via one of the following routes:</p>
-  <ol>
-    <li>A patch to the <a
-    href="https://github.com/dataprotocols/data-catalog-spec">git repo</a> (fork and pull
-  recommended) &ndash; best for textual corrections and additions</li>
-  <li>The <a
-    href="http://lists.okfn.org/mailman/listinfo/data-catalogs">mailing
-    list</a> &ndash; best for general discussion</li>
-    <li>The <a href="https://github.com/dataprotocols/data-catalog-spec/issues">issue
-      tracker</a> &ndash; best for general issues or suggestions</li>
-  </ol>
-</div>
-
-        </div>
-      </div>
-        
-      </div><!--/.well -->
-    </div><!--/span-->
   </div> <!-- / row -->
 </div>
 
 <footer>
   <div class="inner">
-    <div class="container">
+    <div class="container-fluid">
             <p class="copyright">
       </p>
 
