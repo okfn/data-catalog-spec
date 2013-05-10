@@ -2,6 +2,9 @@ Data Catalog Interoperability Protocol
 ++++++++++++++++++++++++++++++++++++++
 
 :Editors: Rufus Pollock (Open Knowledge Foundation), James Gardner (3aims)
+:**Version**: 1.0-beta.2
+:**Last Updated**: 10 May 2013
+:**Created**: 16 April 2012
 
 .. note:: This proposal reflects the contribution of many people over a substantial period. In particular, there are the participants at the first `Data Catalog Interoperability Workshop`_ in Edinburgh in May 2011 (organized under the auspices of the LOD2 project), as well as the members of the `data-catalogs group and mailing list`_ where this specification has been discussed on an ongoing basis. Among those who have provided expert feedback or input are: Phil Archer (W3C), Martin Alvarez-Espinar (CTIC), Richard Cyganiak (DERI), John Erickson (RPI), Chris Gutteridge (Southampton University), Jim Hendler (RPI), Faadi Mali (DERI), Ed Summers (Library of Congress)
 
