@@ -59,16 +59,6 @@ Also to consider:
 2. Technology Choices
 =====================
 
-HTTP vs HTTPS
--------------
-
-The most obvious choice for an underlying protocol on which to base DCIP is HTTP. It meets all the criteria 1-5 above and can be used as a basis for all user stories 1-5. User story 3. is about ensuring data received from other servers can be trusted. One way to ensure this would be to mandate HTTPS as the standard transport, but this has its own difficulties, namely that:
-
-* HTTPS servers each have to have their own IP address. Many existing catalogs run on IPv4 networks where IP addresses are in short supply. If HTTPS was the standard, significant deployment changes may have to be made to existing infrastructure and this would break go against criteria 2. and 3. above. 
-* HTTPS servers require certificates. Managing certificates puts additional overhead on catalogs that might not otherwise use them. If you want to guarantee that your HTTPS certificate authorities are recognised by very old browsers, and you want to meet criteria 5 above, you have to buy certificates from expensive providers otherwise users accessing a service from a web browser may be asked whether they trust the certificates.
-
-For these reasons, we choose HTTP as the underlying transport, but provide a facility for requests and responses to be signed to prove they haven't been altered.
-
 JSONP vs JSON+CORS vs DCAT.N3+CORS
 ----------------------------------
 
