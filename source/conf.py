@@ -102,7 +102,7 @@ html_theme_options = {
 
 # Custom sidebar templates, maps document names to template names.
 html_sidebars = {
-    '**':  ['localtoc.html', 'contribute.html']
+    '**':  ['contribute.html']
 }
 
 # Theme options are theme-specific and customize the look and feel of a theme
@@ -111,7 +111,7 @@ html_sidebars = {
 #html_theme_options = {}
 
 html_sidebars = {
-    '**':  ['localtoc.html', 'contribute.html']
+    '**':  ['contribute.html']
 }
 
 # Add any paths that contain custom themes here, relative to this directory.
