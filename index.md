@@ -2,7 +2,7 @@
 title: Data Catalog Interoperability Protocol
 layout: default
 version: 1.0-beta-3
-last_update: 28 January 2014
+last_update: 13 November 2013
 created: 16 April 2012
 author:
   - Adria Mercader (Open Knowledge Foundation,
