@@ -205,8 +205,8 @@ When this endpoint receives a GET request it should return the listing of all
 or a limited subset of the datasets in either JSON or XML-RDF format depending
 on the endpoint.
 
-http://example.com/data.json 
-http://example.com/data.rdf
+    http://example.com/data.json 
+    http://example.com/data.rdf
 
 The JSON listing should be a list of JSON objects. For example an endpoint that
 contains 3 datasets:
@@ -290,14 +290,14 @@ XML-RDF
 If only a subset of all the datasets in the catalog are returned when accessing
 the endpoint, it needs to accept a page parameter, i.e:
 
-http://example.com/data.json?page=2
+    http://example.com/data.json?page=2
 
 The page parameter should start at 1 so http://example.com/data.json is
 equivalent to http://example.com/data.json?page=1
 
 The amount of items per page will be specified by how many results are on the
-first page.  So if http://example.com/data.json has 100 results then
-http://example.com/data.json?page=2 should have at most 100 results too.
+first page. So if `http://example.com/data.json` has 100 results then
+`http://example.com/data.json?page=2` should have at most 100 results too.
 
 In order to get more datasets, the page parameter will be incremented
 sequentially until one of the following conditions arises:
